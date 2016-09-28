@@ -489,7 +489,7 @@ static const char *__pyx_f[] = {
 /*--- Type declarations ---*/
 struct __pyx_obj_11db_connects_DbConnection;
 
-/* "db_connection.pyx":8
+/* "db_connection.pyx":11
  * 
  * 
  * cdef class DbConnection(object):             # <<<<<<<<<<<<<<
@@ -565,18 +565,6 @@ struct __pyx_obj_11db_connects_DbConnection {
 #define __Pyx_CLEAR(r)    do { PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);} while(0)
 #define __Pyx_XCLEAR(r)   do { if((r) != NULL) {PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);}} while(0)
 
-/* RaiseDoubleKeywords.proto */
-static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
-
-/* ParseKeywords.proto */
-static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[],\
-    PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,\
-    const char* function_name);
-
-/* RaiseArgTupleInvalid.proto */
-static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
-    Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
-
 /* PyObjectGetAttrStr.proto */
 #if CYTHON_COMPILING_IN_CPYTHON
 static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject* attr_name) {
@@ -596,6 +584,21 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject
 /* GetBuiltinName.proto */
 static PyObject *__Pyx_GetBuiltinName(PyObject *name);
 
+/* RaiseArgTupleInvalid.proto */
+static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
+    Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
+
+/* KeywordStringCheck.proto */
+static CYTHON_INLINE int __Pyx_CheckKeywordStrings(PyObject *kwdict, const char* function_name, int kw_allowed);
+
+/* RaiseDoubleKeywords.proto */
+static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
+
+/* ParseKeywords.proto */
+static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[],\
+    PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,\
+    const char* function_name);
+
 /* GetModuleGlobalName.proto */
 static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
 
@@ -604,6 +607,21 @@ static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
 static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw);
 #else
 #define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
+#endif
+
+/* PyObjectCallMethO.proto */
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject *arg);
+#endif
+
+/* PyObjectCallOneArg.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg);
+
+/* PyObjectCallNoArg.proto */
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func);
+#else
+#define __Pyx_PyObject_CallNoArg(func) __Pyx_PyObject_Call(func, __pyx_empty_tuple, NULL)
 #endif
 
 /* PyThreadStateGet.proto */
@@ -634,6 +652,36 @@ static int __Pyx__GetException(PyThreadState *tstate, PyObject **type, PyObject 
 static int __Pyx_GetException(PyObject **type, PyObject **value, PyObject **tb);
 #endif
 
+/* PyErrExceptionMatches.proto */
+#if CYTHON_COMPILING_IN_CPYTHON
+#define __Pyx_PyErr_ExceptionMatches(err) __Pyx_PyErr_ExceptionMatchesInState(__pyx_tstate, err)
+static CYTHON_INLINE int __Pyx_PyErr_ExceptionMatchesInState(PyThreadState* tstate, PyObject* err);
+#else
+#define __Pyx_PyErr_ExceptionMatches(err)  PyErr_ExceptionMatches(err)
+#endif
+
+/* GetItemInt.proto */
+#define __Pyx_GetItemInt(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
+    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
+    __Pyx_GetItemInt_Fast(o, (Py_ssize_t)i, is_list, wraparound, boundscheck) :\
+    (is_list ? (PyErr_SetString(PyExc_IndexError, "list index out of range"), (PyObject*)NULL) :\
+               __Pyx_GetItemInt_Generic(o, to_py_func(i))))
+#define __Pyx_GetItemInt_List(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
+    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
+    __Pyx_GetItemInt_List_Fast(o, (Py_ssize_t)i, wraparound, boundscheck) :\
+    (PyErr_SetString(PyExc_IndexError, "list index out of range"), (PyObject*)NULL))
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_List_Fast(PyObject *o, Py_ssize_t i,
+                                                              int wraparound, int boundscheck);
+#define __Pyx_GetItemInt_Tuple(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
+    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
+    __Pyx_GetItemInt_Tuple_Fast(o, (Py_ssize_t)i, wraparound, boundscheck) :\
+    (PyErr_SetString(PyExc_IndexError, "tuple index out of range"), (PyObject*)NULL))
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize_t i,
+                                                              int wraparound, int boundscheck);
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j);
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i,
+                                                     int is_list, int wraparound, int boundscheck);
+
 /* Import.proto */
 static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, int level);
 
@@ -656,15 +704,15 @@ static void __pyx_insert_code_object(int code_line, PyCodeObject* code_object);
 static void __Pyx_AddTraceback(const char *funcname, int c_line,
                                int py_line, const char *filename);
 
-/* CIntToPy.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
-
 /* Print.proto */
 static int __Pyx_Print(PyObject*, PyObject *, int);
 #if CYTHON_COMPILING_IN_PYPY || PY_MAJOR_VERSION >= 3
 static PyObject* __pyx_print = 0;
 static PyObject* __pyx_print_kwargs = 0;
 #endif
+
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
 
 /* PrintOne.proto */
 static int __Pyx_PrintOne(PyObject* stream, PyObject *o);
@@ -674,6 +722,9 @@ static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
 
 /* CIntFromPy.proto */
 static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
+
+/* CStringEquals.proto */
+static CYTHON_INLINE int __Pyx_StrEq(const char *, const char *);
 
 /* CheckBinaryVersion.proto */
 static int __Pyx_check_binary_version(void);
@@ -688,60 +739,160 @@ static PyTypeObject *__pyx_ptype_11db_connects_DbConnection = 0;
 int __pyx_module_is_main_db_connects = 0;
 
 /* Implementation of 'db_connects' */
+static PyObject *__pyx_builtin_any;
+static const char __pyx_k__2[] = "*";
 static const char __pyx_k_db[] = "db";
+static const char __pyx_k_any[] = "any";
 static const char __pyx_k_end[] = "end";
+static const char __pyx_k_s_s[] = "%s:%s";
 static const char __pyx_k_sys[] = "sys";
+static const char __pyx_k_args[] = "args";
 static const char __pyx_k_file[] = "file";
 static const char __pyx_k_host[] = "host";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_port[] = "port";
 static const char __pyx_k_test[] = "__test__";
+static const char __pyx_k_Error[] = "Error";
 static const char __pyx_k_Redis[] = "Redis";
 static const char __pyx_k_print[] = "print";
 static const char __pyx_k_redis[] = "redis";
 static const char __pyx_k_import[] = "__import__";
+static const char __pyx_k_MySQLdb[] = "MySQLdb";
+static const char __pyx_k_connect[] = "connect";
+static const char __pyx_k_pymongo[] = "pymongo";
 static const char __pyx_k_database[] = "database";
+static const char __pyx_k_exc_info[] = "exc_info";
 static const char __pyx_k_password[] = "password";
+static const char __pyx_k_psycopg2[] = "psycopg2";
 static const char __pyx_k_username[] = "username";
+static const char __pyx_k_vh6HSwa9[] = "vh6HSwa9";
+static const char __pyx_k_Error_d_s[] = "Error %d: %s";
+static const char __pyx_k_LOCALHOST[] = "LOCALHOST";
 static const char __pyx_k_REDIS_PORT[] = "REDIS_PORT";
+static const char __pyx_k_MongoClient[] = "MongoClient";
 static const char __pyx_k_db_constants[] = "db_constants";
+static const char __pyx_k_StorageConstants[] = "StorageConstants";
 static const char __pyx_k_REDIS_DATABASE_HOST[] = "REDIS_DATABASE_HOST";
 static const char __pyx_k_REDIS_DATABASE_PASSWORD[] = "REDIS_DATABASE_PASSWORD";
+static const char __pyx_k_Error_while_connecting_mongo_db[] = "Error while connecting mongo db";
 static const char __pyx_k_Error_while_connecting_redis_ser[] = "Error while connecting redis server db";
+static const char __pyx_k_host__host_username__username_pa[] = "host=_host,username=_username,password=_password,database=_database";
+static PyObject *__pyx_n_s_Error;
+static PyObject *__pyx_kp_s_Error_d_s;
+static PyObject *__pyx_kp_s_Error_while_connecting_mongo_db;
 static PyObject *__pyx_kp_s_Error_while_connecting_redis_ser;
+static PyObject *__pyx_n_s_LOCALHOST;
+static PyObject *__pyx_n_s_MongoClient;
+static PyObject *__pyx_n_s_MySQLdb;
 static PyObject *__pyx_n_s_REDIS_DATABASE_HOST;
 static PyObject *__pyx_n_s_REDIS_DATABASE_PASSWORD;
 static PyObject *__pyx_n_s_REDIS_PORT;
 static PyObject *__pyx_n_s_Redis;
+static PyObject *__pyx_n_s_StorageConstants;
+static PyObject *__pyx_n_s__2;
+static PyObject *__pyx_n_s_any;
+static PyObject *__pyx_n_s_args;
+static PyObject *__pyx_n_s_connect;
 static PyObject *__pyx_n_s_database;
 static PyObject *__pyx_n_s_db;
 static PyObject *__pyx_n_s_db_constants;
 static PyObject *__pyx_n_s_end;
+static PyObject *__pyx_n_s_exc_info;
 static PyObject *__pyx_n_s_file;
 static PyObject *__pyx_n_s_host;
+static PyObject *__pyx_kp_s_host__host_username__username_pa;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_password;
 static PyObject *__pyx_n_s_port;
 static PyObject *__pyx_n_s_print;
+static PyObject *__pyx_n_s_psycopg2;
+static PyObject *__pyx_n_s_pymongo;
 static PyObject *__pyx_n_s_redis;
+static PyObject *__pyx_kp_s_s_s;
 static PyObject *__pyx_n_s_sys;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_username;
-static PyObject *__pyx_pf_11db_connects_12DbConnection_redis_db_connect(CYTHON_UNUSED struct __pyx_obj_11db_connects_DbConnection *__pyx_v_self, PyObject *__pyx_v_host, CYTHON_UNUSED PyObject *__pyx_v_username, PyObject *__pyx_v_password, PyObject *__pyx_v_database); /* proto */
+static PyObject *__pyx_n_s_vh6HSwa9;
+static int __pyx_pf_11db_connects_12DbConnection___init__(CYTHON_UNUSED struct __pyx_obj_11db_connects_DbConnection *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_11db_connects_12DbConnection_2redis_db_connect(CYTHON_UNUSED struct __pyx_obj_11db_connects_DbConnection *__pyx_v_self, PyObject *__pyx_v_host, CYTHON_UNUSED PyObject *__pyx_v_username, PyObject *__pyx_v_password, PyObject *__pyx_v_database); /* proto */
+static PyObject *__pyx_pf_11db_connects_12DbConnection_4postgres_db_connect(CYTHON_UNUSED struct __pyx_obj_11db_connects_DbConnection *__pyx_v_self, PyObject *__pyx_v_host, PyObject *__pyx_v_username, PyObject *__pyx_v_password, PyObject *__pyx_v_database); /* proto */
+static PyObject *__pyx_pf_11db_connects_12DbConnection_6mysql_db_connect(CYTHON_UNUSED struct __pyx_obj_11db_connects_DbConnection *__pyx_v_self, PyObject *__pyx_v_host, PyObject *__pyx_v_username, PyObject *__pyx_v_password, PyObject *__pyx_v_database); /* proto */
+static PyObject *__pyx_pf_11db_connects_12DbConnection_8mongo_db_connect(CYTHON_UNUSED struct __pyx_obj_11db_connects_DbConnection *__pyx_v_self, PyObject *__pyx_v_host, PyObject *__pyx_v_username, PyObject *__pyx_v_password, PyObject *__pyx_v_database, PyObject *__pyx_v_port); /* proto */
 static PyObject *__pyx_tp_new_11db_connects_DbConnection(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_int_44444;
+static PyObject *__pyx_int_4444444333333333322222222222;
+static PyObject *__pyx_int_444444444444444444444444444444444444444444444444433;
+static PyObject *__pyx_tuple_;
 
-/* "db_connection.pyx":11
+/* "db_connection.pyx":14
  * 
  * 
- * 	def redis_db_connect(self,host=None,username=None,password=None,database=None):             # <<<<<<<<<<<<<<
- * 		_host = host or db_constants.REDIS_DATABASE_HOST
- * 		_password = password or db_constants.REDIS_DATABASE_PASSWORD
+ * 	def __init__(self):             # <<<<<<<<<<<<<<
+ * 		print 44444
+ * 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11db_connects_12DbConnection_1redis_db_connect(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_11db_connects_12DbConnection_1redis_db_connect(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_11db_connects_12DbConnection_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_11db_connects_12DbConnection_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__init__ (wrapper)", 0);
+  if (unlikely(PyTuple_GET_SIZE(__pyx_args) > 0)) {
+    __Pyx_RaiseArgtupleInvalid("__init__", 1, 0, 0, PyTuple_GET_SIZE(__pyx_args)); return -1;}
+  if (unlikely(__pyx_kwds) && unlikely(PyDict_Size(__pyx_kwds) > 0) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__init__", 0))) return -1;
+  __pyx_r = __pyx_pf_11db_connects_12DbConnection___init__(((struct __pyx_obj_11db_connects_DbConnection *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_11db_connects_12DbConnection___init__(CYTHON_UNUSED struct __pyx_obj_11db_connects_DbConnection *__pyx_v_self) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__init__", 0);
+
+  /* "db_connection.pyx":15
+ * 
+ * 	def __init__(self):
+ * 		print 44444             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  if (__Pyx_PrintOne(0, __pyx_int_44444) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
+
+  /* "db_connection.pyx":14
+ * 
+ * 
+ * 	def __init__(self):             # <<<<<<<<<<<<<<
+ * 		print 44444
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("db_connects.DbConnection.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "db_connection.pyx":18
+ * 
+ * 
+ * 	def redis_db_connect(self,host=None,username=None,password=None,database=None):             # <<<<<<<<<<<<<<
+ * 		stocons = StorageConstants()
+ * 		_host = host or stocons.REDIS_DATABASE_HOST
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_11db_connects_12DbConnection_3redis_db_connect(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_11db_connects_12DbConnection_3redis_db_connect(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_host = 0;
   CYTHON_UNUSED PyObject *__pyx_v_username = 0;
   PyObject *__pyx_v_password = 0;
@@ -791,7 +942,7 @@ static PyObject *__pyx_pw_11db_connects_12DbConnection_1redis_db_connect(PyObjec
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "redis_db_connect") < 0)) __PYX_ERR(0, 11, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "redis_db_connect") < 0)) __PYX_ERR(0, 18, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -810,20 +961,21 @@ static PyObject *__pyx_pw_11db_connects_12DbConnection_1redis_db_connect(PyObjec
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("redis_db_connect", 0, 0, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 11, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("redis_db_connect", 0, 0, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 18, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("db_connects.DbConnection.redis_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_11db_connects_12DbConnection_redis_db_connect(((struct __pyx_obj_11db_connects_DbConnection *)__pyx_v_self), __pyx_v_host, __pyx_v_username, __pyx_v_password, __pyx_v_database);
+  __pyx_r = __pyx_pf_11db_connects_12DbConnection_2redis_db_connect(((struct __pyx_obj_11db_connects_DbConnection *)__pyx_v_self), __pyx_v_host, __pyx_v_username, __pyx_v_password, __pyx_v_database);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11db_connects_12DbConnection_redis_db_connect(CYTHON_UNUSED struct __pyx_obj_11db_connects_DbConnection *__pyx_v_self, PyObject *__pyx_v_host, CYTHON_UNUSED PyObject *__pyx_v_username, PyObject *__pyx_v_password, PyObject *__pyx_v_database) {
+static PyObject *__pyx_pf_11db_connects_12DbConnection_2redis_db_connect(CYTHON_UNUSED struct __pyx_obj_11db_connects_DbConnection *__pyx_v_self, PyObject *__pyx_v_host, CYTHON_UNUSED PyObject *__pyx_v_username, PyObject *__pyx_v_password, PyObject *__pyx_v_database) {
+  PyObject *__pyx_v_stocons = NULL;
   PyObject *__pyx_v__host = NULL;
   PyObject *__pyx_v__password = NULL;
   PyObject *__pyx_v__database = NULL;
@@ -832,130 +984,151 @@ static PyObject *__pyx_pf_11db_connects_12DbConnection_redis_db_connect(CYTHON_U
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  int __pyx_t_2;
+  PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   PyObject *__pyx_t_7 = NULL;
   __Pyx_RefNannySetupContext("redis_db_connect", 0);
 
-  /* "db_connection.pyx":12
+  /* "db_connection.pyx":19
  * 
  * 	def redis_db_connect(self,host=None,username=None,password=None,database=None):
- * 		_host = host or db_constants.REDIS_DATABASE_HOST             # <<<<<<<<<<<<<<
- * 		_password = password or db_constants.REDIS_DATABASE_PASSWORD
+ * 		stocons = StorageConstants()             # <<<<<<<<<<<<<<
+ * 		_host = host or stocons.REDIS_DATABASE_HOST
+ * 		_password = password or stocons.REDIS_DATABASE_PASSWORD
+ */
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_StorageConstants); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  } else {
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  }
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v_stocons = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "db_connection.pyx":20
+ * 	def redis_db_connect(self,host=None,username=None,password=None,database=None):
+ * 		stocons = StorageConstants()
+ * 		_host = host or stocons.REDIS_DATABASE_HOST             # <<<<<<<<<<<<<<
+ * 		_password = password or stocons.REDIS_DATABASE_PASSWORD
  * 		_database = database or 0
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_host); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 12, __pyx_L1_error)
-  if (!__pyx_t_2) {
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_host); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (!__pyx_t_4) {
   } else {
     __Pyx_INCREF(__pyx_v_host);
     __pyx_t_1 = __pyx_v_host;
     goto __pyx_L3_bool_binop_done;
   }
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_db_constants); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 12, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_REDIS_DATABASE_HOST); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 12, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_INCREF(__pyx_t_4);
-  __pyx_t_1 = __pyx_t_4;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_stocons, __pyx_n_s_REDIS_DATABASE_HOST); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(__pyx_t_2);
+  __pyx_t_1 = __pyx_t_2;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_L3_bool_binop_done:;
   __pyx_v__host = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "db_connection.pyx":13
- * 	def redis_db_connect(self,host=None,username=None,password=None,database=None):
- * 		_host = host or db_constants.REDIS_DATABASE_HOST
- * 		_password = password or db_constants.REDIS_DATABASE_PASSWORD             # <<<<<<<<<<<<<<
+  /* "db_connection.pyx":21
+ * 		stocons = StorageConstants()
+ * 		_host = host or stocons.REDIS_DATABASE_HOST
+ * 		_password = password or stocons.REDIS_DATABASE_PASSWORD             # <<<<<<<<<<<<<<
  * 		_database = database or 0
- * 		_port=db_constants.REDIS_PORT
+ * 		_port = stocons.REDIS_PORT
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_password); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 13, __pyx_L1_error)
-  if (!__pyx_t_2) {
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_password); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 21, __pyx_L1_error)
+  if (!__pyx_t_4) {
   } else {
     __Pyx_INCREF(__pyx_v_password);
     __pyx_t_1 = __pyx_v_password;
     goto __pyx_L5_bool_binop_done;
   }
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_db_constants); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 13, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_REDIS_DATABASE_PASSWORD); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 13, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_INCREF(__pyx_t_3);
-  __pyx_t_1 = __pyx_t_3;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_stocons, __pyx_n_s_REDIS_DATABASE_PASSWORD); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(__pyx_t_2);
+  __pyx_t_1 = __pyx_t_2;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_L5_bool_binop_done:;
   __pyx_v__password = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "db_connection.pyx":14
- * 		_host = host or db_constants.REDIS_DATABASE_HOST
- * 		_password = password or db_constants.REDIS_DATABASE_PASSWORD
+  /* "db_connection.pyx":22
+ * 		_host = host or stocons.REDIS_DATABASE_HOST
+ * 		_password = password or stocons.REDIS_DATABASE_PASSWORD
  * 		_database = database or 0             # <<<<<<<<<<<<<<
- * 		_port=db_constants.REDIS_PORT
+ * 		_port = stocons.REDIS_PORT
  * 		print _host,_port,_password
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_database); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 14, __pyx_L1_error)
-  if (!__pyx_t_2) {
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_database); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (!__pyx_t_4) {
   } else {
     __Pyx_INCREF(__pyx_v_database);
     __pyx_t_1 = __pyx_v_database;
     goto __pyx_L7_bool_binop_done;
   }
-  __pyx_t_3 = __Pyx_PyInt_From_long(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 14, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __pyx_t_3;
-  __pyx_t_3 = 0;
+  __pyx_t_2 = __Pyx_PyInt_From_long(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = __pyx_t_2;
+  __pyx_t_2 = 0;
   __pyx_L7_bool_binop_done:;
   __pyx_v__database = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "db_connection.pyx":15
- * 		_password = password or db_constants.REDIS_DATABASE_PASSWORD
+  /* "db_connection.pyx":23
+ * 		_password = password or stocons.REDIS_DATABASE_PASSWORD
  * 		_database = database or 0
- * 		_port=db_constants.REDIS_PORT             # <<<<<<<<<<<<<<
+ * 		_port = stocons.REDIS_PORT             # <<<<<<<<<<<<<<
  * 		print _host,_port,_password
  * 
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_db_constants); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_stocons, __pyx_n_s_REDIS_PORT); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_REDIS_PORT); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v__port = __pyx_t_3;
-  __pyx_t_3 = 0;
+  __pyx_v__port = __pyx_t_1;
+  __pyx_t_1 = 0;
 
-  /* "db_connection.pyx":16
+  /* "db_connection.pyx":24
  * 		_database = database or 0
- * 		_port=db_constants.REDIS_PORT
+ * 		_port = stocons.REDIS_PORT
  * 		print _host,_port,_password             # <<<<<<<<<<<<<<
  * 
  * 		try:
  */
-  __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v__host);
   __Pyx_GIVEREF(__pyx_v__host);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v__host);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v__host);
   __Pyx_INCREF(__pyx_v__port);
   __Pyx_GIVEREF(__pyx_v__port);
-  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_v__port);
+  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_v__port);
   __Pyx_INCREF(__pyx_v__password);
   __Pyx_GIVEREF(__pyx_v__password);
-  PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_v__password);
-  if (__Pyx_Print(0, __pyx_t_3, 1) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_v__password);
+  if (__Pyx_Print(0, __pyx_t_1, 1) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "db_connection.pyx":18
+  /* "db_connection.pyx":26
  * 		print _host,_port,_password
  * 
  * 		try:             # <<<<<<<<<<<<<<
- * 			if password:
- * 				connection = redis.Redis(host= _host, port= _port, db= _database,password= _password)
+ * 			if _password:
+ * 				print 444444444444444444444444444444444444444444444444433
  */
   {
     __Pyx_PyThreadState_declare
@@ -966,80 +1139,98 @@ static PyObject *__pyx_pf_11db_connects_12DbConnection_redis_db_connect(CYTHON_U
     __Pyx_XGOTREF(__pyx_t_7);
     /*try:*/ {
 
-      /* "db_connection.pyx":19
+      /* "db_connection.pyx":27
  * 
  * 		try:
- * 			if password:             # <<<<<<<<<<<<<<
- * 				connection = redis.Redis(host= _host, port= _port, db= _database,password= _password)
- * 			else:
+ * 			if _password:             # <<<<<<<<<<<<<<
+ * 				print 444444444444444444444444444444444444444444444444433
+ * 				connection = redis.Redis(host= _host, port= _port, db= _database,password= 'vh6HSwa9')
  */
-      __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_password); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 19, __pyx_L9_error)
-      if (__pyx_t_2) {
+      __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v__password); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 27, __pyx_L9_error)
+      if (__pyx_t_4) {
 
-        /* "db_connection.pyx":20
+        /* "db_connection.pyx":28
  * 		try:
- * 			if password:
- * 				connection = redis.Redis(host= _host, port= _port, db= _database,password= _password)             # <<<<<<<<<<<<<<
+ * 			if _password:
+ * 				print 444444444444444444444444444444444444444444444444433             # <<<<<<<<<<<<<<
+ * 				connection = redis.Redis(host= _host, port= _port, db= _database,password= 'vh6HSwa9')
  * 			else:
- * 				connection = redis.Redis(host= _host, port= _port, db= _database)
  */
-        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_redis); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L9_error)
-        __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Redis); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L9_error)
+        if (__Pyx_PrintOne(0, __pyx_int_444444444444444444444444444444444444444444444444433) < 0) __PYX_ERR(0, 28, __pyx_L9_error)
+
+        /* "db_connection.pyx":29
+ * 			if _password:
+ * 				print 444444444444444444444444444444444444444444444444433
+ * 				connection = redis.Redis(host= _host, port= _port, db= _database,password= 'vh6HSwa9')             # <<<<<<<<<<<<<<
+ * 			else:
+ * 				print 4444444333333333322222222222
+ */
+        __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_redis); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L9_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L9_error)
-        __Pyx_GOTREF(__pyx_t_3);
-        if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_host, __pyx_v__host) < 0) __PYX_ERR(0, 20, __pyx_L9_error)
-        if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_port, __pyx_v__port) < 0) __PYX_ERR(0, 20, __pyx_L9_error)
-        if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_db, __pyx_v__database) < 0) __PYX_ERR(0, 20, __pyx_L9_error)
-        if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_password, __pyx_v__password) < 0) __PYX_ERR(0, 20, __pyx_L9_error)
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L9_error)
-        __Pyx_GOTREF(__pyx_t_4);
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Redis); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L9_error)
+        __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_v_connection = __pyx_t_4;
-        __pyx_t_4 = 0;
+        __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L9_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_host, __pyx_v__host) < 0) __PYX_ERR(0, 29, __pyx_L9_error)
+        if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_port, __pyx_v__port) < 0) __PYX_ERR(0, 29, __pyx_L9_error)
+        if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_db, __pyx_v__database) < 0) __PYX_ERR(0, 29, __pyx_L9_error)
+        if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_password, __pyx_n_s_vh6HSwa9) < 0) __PYX_ERR(0, 29, __pyx_L9_error)
+        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L9_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __pyx_v_connection = __pyx_t_3;
+        __pyx_t_3 = 0;
 
-        /* "db_connection.pyx":19
+        /* "db_connection.pyx":27
  * 
  * 		try:
- * 			if password:             # <<<<<<<<<<<<<<
- * 				connection = redis.Redis(host= _host, port= _port, db= _database,password= _password)
- * 			else:
+ * 			if _password:             # <<<<<<<<<<<<<<
+ * 				print 444444444444444444444444444444444444444444444444433
+ * 				connection = redis.Redis(host= _host, port= _port, db= _database,password= 'vh6HSwa9')
  */
         goto __pyx_L17;
       }
 
-      /* "db_connection.pyx":22
- * 				connection = redis.Redis(host= _host, port= _port, db= _database,password= _password)
+      /* "db_connection.pyx":31
+ * 				connection = redis.Redis(host= _host, port= _port, db= _database,password= 'vh6HSwa9')
  * 			else:
+ * 				print 4444444333333333322222222222             # <<<<<<<<<<<<<<
+ * 				connection = redis.Redis(host= _host, port= _port, db= _database)
+ * 			return connection
+ */
+      /*else*/ {
+        if (__Pyx_PrintOne(0, __pyx_int_4444444333333333322222222222) < 0) __PYX_ERR(0, 31, __pyx_L9_error)
+
+        /* "db_connection.pyx":32
+ * 			else:
+ * 				print 4444444333333333322222222222
  * 				connection = redis.Redis(host= _host, port= _port, db= _database)             # <<<<<<<<<<<<<<
  * 			return connection
  * 		except:
  */
-      /*else*/ {
-        __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_redis); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 22, __pyx_L9_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_Redis); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 22, __pyx_L9_error)
+        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_redis); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 32, __pyx_L9_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 22, __pyx_L9_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_host, __pyx_v__host) < 0) __PYX_ERR(0, 22, __pyx_L9_error)
-        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_port, __pyx_v__port) < 0) __PYX_ERR(0, 22, __pyx_L9_error)
-        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_db, __pyx_v__database) < 0) __PYX_ERR(0, 22, __pyx_L9_error)
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L9_error)
+        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Redis); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L9_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __pyx_v_connection = __pyx_t_1;
-        __pyx_t_1 = 0;
+        __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 32, __pyx_L9_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_host, __pyx_v__host) < 0) __PYX_ERR(0, 32, __pyx_L9_error)
+        if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_port, __pyx_v__port) < 0) __PYX_ERR(0, 32, __pyx_L9_error)
+        if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_db, __pyx_v__database) < 0) __PYX_ERR(0, 32, __pyx_L9_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 32, __pyx_L9_error)
+        __Pyx_GOTREF(__pyx_t_2);
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        __pyx_v_connection = __pyx_t_2;
+        __pyx_t_2 = 0;
       }
       __pyx_L17:;
 
-      /* "db_connection.pyx":23
- * 			else:
+      /* "db_connection.pyx":33
+ * 				print 4444444333333333322222222222
  * 				connection = redis.Redis(host= _host, port= _port, db= _database)
  * 			return connection             # <<<<<<<<<<<<<<
  * 		except:
@@ -1050,21 +1241,21 @@ static PyObject *__pyx_pf_11db_connects_12DbConnection_redis_db_connect(CYTHON_U
       __pyx_r = __pyx_v_connection;
       goto __pyx_L13_try_return;
 
-      /* "db_connection.pyx":18
+      /* "db_connection.pyx":26
  * 		print _host,_port,_password
  * 
  * 		try:             # <<<<<<<<<<<<<<
- * 			if password:
- * 				connection = redis.Redis(host= _host, port= _port, db= _database,password= _password)
+ * 			if _password:
+ * 				print 444444444444444444444444444444444444444444444444433
  */
     }
     __pyx_L9_error:;
     __Pyx_PyThreadState_assign
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "db_connection.pyx":24
+    /* "db_connection.pyx":34
  * 				connection = redis.Redis(host= _host, port= _port, db= _database)
  * 			return connection
  * 		except:             # <<<<<<<<<<<<<<
@@ -1073,21 +1264,21 @@ static PyObject *__pyx_pf_11db_connects_12DbConnection_redis_db_connect(CYTHON_U
  */
     /*except:*/ {
       __Pyx_AddTraceback("db_connects.DbConnection.redis_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_4, &__pyx_t_3) < 0) __PYX_ERR(0, 24, __pyx_L11_except_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_GOTREF(__pyx_t_4);
+      if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_3, &__pyx_t_1) < 0) __PYX_ERR(0, 34, __pyx_L11_except_error)
+      __Pyx_GOTREF(__pyx_t_2);
       __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_GOTREF(__pyx_t_1);
 
-      /* "db_connection.pyx":25
+      /* "db_connection.pyx":35
  * 			return connection
  * 		except:
  * 			print "Error while connecting redis server db"             # <<<<<<<<<<<<<<
  * 			return None
  * 
  */
-      if (__Pyx_PrintOne(0, __pyx_kp_s_Error_while_connecting_redis_ser) < 0) __PYX_ERR(0, 25, __pyx_L11_except_error)
+      if (__Pyx_PrintOne(0, __pyx_kp_s_Error_while_connecting_redis_ser) < 0) __PYX_ERR(0, 35, __pyx_L11_except_error)
 
-      /* "db_connection.pyx":26
+      /* "db_connection.pyx":36
  * 		except:
  * 			print "Error while connecting redis server db"
  * 			return None             # <<<<<<<<<<<<<<
@@ -1098,18 +1289,18 @@ static PyObject *__pyx_pf_11db_connects_12DbConnection_redis_db_connect(CYTHON_U
       __Pyx_INCREF(Py_None);
       __pyx_r = Py_None;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       goto __pyx_L12_except_return;
     }
     __pyx_L11_except_error:;
 
-    /* "db_connection.pyx":18
+    /* "db_connection.pyx":26
  * 		print _host,_port,_password
  * 
  * 		try:             # <<<<<<<<<<<<<<
- * 			if password:
- * 				connection = redis.Redis(host= _host, port= _port, db= _database,password= _password)
+ * 			if _password:
+ * 				print 444444444444444444444444444444444444444444444444433
  */
     __Pyx_PyThreadState_assign
     __Pyx_XGIVEREF(__pyx_t_5);
@@ -1133,27 +1324,1272 @@ static PyObject *__pyx_pf_11db_connects_12DbConnection_redis_db_connect(CYTHON_U
     goto __pyx_L0;
   }
 
-  /* "db_connection.pyx":11
+  /* "db_connection.pyx":18
  * 
  * 
  * 	def redis_db_connect(self,host=None,username=None,password=None,database=None):             # <<<<<<<<<<<<<<
- * 		_host = host or db_constants.REDIS_DATABASE_HOST
- * 		_password = password or db_constants.REDIS_DATABASE_PASSWORD
+ * 		stocons = StorageConstants()
+ * 		_host = host or stocons.REDIS_DATABASE_HOST
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("db_connects.DbConnection.redis_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_stocons);
+  __Pyx_XDECREF(__pyx_v__host);
+  __Pyx_XDECREF(__pyx_v__password);
+  __Pyx_XDECREF(__pyx_v__database);
+  __Pyx_XDECREF(__pyx_v__port);
+  __Pyx_XDECREF(__pyx_v_connection);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "db_connection.pyx":40
+ * 
+ * 
+ * 	def postgres_db_connect(self,host=None,username=None,password=None,database=None):             # <<<<<<<<<<<<<<
+ * 		_host = host or LOCALHOST
+ * 		_username = username
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_11db_connects_12DbConnection_5postgres_db_connect(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_11db_connects_12DbConnection_5postgres_db_connect(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_host = 0;
+  PyObject *__pyx_v_username = 0;
+  PyObject *__pyx_v_password = 0;
+  PyObject *__pyx_v_database = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("postgres_db_connect (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_host,&__pyx_n_s_username,&__pyx_n_s_password,&__pyx_n_s_database,0};
+    PyObject* values[4] = {0,0,0,0};
+    values[0] = ((PyObject *)Py_None);
+    values[1] = ((PyObject *)Py_None);
+    values[2] = ((PyObject *)Py_None);
+    values[3] = ((PyObject *)Py_None);
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_host);
+          if (value) { values[0] = value; kw_args--; }
+        }
+        case  1:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_username);
+          if (value) { values[1] = value; kw_args--; }
+        }
+        case  2:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_password);
+          if (value) { values[2] = value; kw_args--; }
+        }
+        case  3:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_database);
+          if (value) { values[3] = value; kw_args--; }
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "postgres_db_connect") < 0)) __PYX_ERR(0, 40, __pyx_L3_error)
+      }
+    } else {
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    __pyx_v_host = values[0];
+    __pyx_v_username = values[1];
+    __pyx_v_password = values[2];
+    __pyx_v_database = values[3];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("postgres_db_connect", 0, 0, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 40, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("db_connects.DbConnection.postgres_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_11db_connects_12DbConnection_4postgres_db_connect(((struct __pyx_obj_11db_connects_DbConnection *)__pyx_v_self), __pyx_v_host, __pyx_v_username, __pyx_v_password, __pyx_v_database);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_11db_connects_12DbConnection_4postgres_db_connect(CYTHON_UNUSED struct __pyx_obj_11db_connects_DbConnection *__pyx_v_self, PyObject *__pyx_v_host, PyObject *__pyx_v_username, PyObject *__pyx_v_password, PyObject *__pyx_v_database) {
+  CYTHON_UNUSED PyObject *__pyx_v__host = NULL;
+  CYTHON_UNUSED PyObject *__pyx_v__username = NULL;
+  CYTHON_UNUSED PyObject *__pyx_v__password = NULL;
+  CYTHON_UNUSED PyObject *__pyx_v__database = NULL;
+  PyObject *__pyx_v_connection = NULL;
+  PyObject *__pyx_v_e = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  int __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_9 = NULL;
+  PyObject *__pyx_t_10 = NULL;
+  PyObject *__pyx_t_11 = NULL;
+  __Pyx_RefNannySetupContext("postgres_db_connect", 0);
+
+  /* "db_connection.pyx":41
+ * 
+ * 	def postgres_db_connect(self,host=None,username=None,password=None,database=None):
+ * 		_host = host or LOCALHOST             # <<<<<<<<<<<<<<
+ * 		_username = username
+ * 		_password = password
+ */
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_host); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 41, __pyx_L1_error)
+  if (!__pyx_t_2) {
+  } else {
+    __Pyx_INCREF(__pyx_v_host);
+    __pyx_t_1 = __pyx_v_host;
+    goto __pyx_L3_bool_binop_done;
+  }
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_LOCALHOST); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_t_3);
+  __pyx_t_1 = __pyx_t_3;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_L3_bool_binop_done:;
+  __pyx_v__host = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "db_connection.pyx":42
+ * 	def postgres_db_connect(self,host=None,username=None,password=None,database=None):
+ * 		_host = host or LOCALHOST
+ * 		_username = username             # <<<<<<<<<<<<<<
+ * 		_password = password
+ * 		_database = database
+ */
+  __Pyx_INCREF(__pyx_v_username);
+  __pyx_v__username = __pyx_v_username;
+
+  /* "db_connection.pyx":43
+ * 		_host = host or LOCALHOST
+ * 		_username = username
+ * 		_password = password             # <<<<<<<<<<<<<<
+ * 		_database = database
+ * 
+ */
+  __Pyx_INCREF(__pyx_v_password);
+  __pyx_v__password = __pyx_v_password;
+
+  /* "db_connection.pyx":44
+ * 		_username = username
+ * 		_password = password
+ * 		_database = database             # <<<<<<<<<<<<<<
+ * 
+ * 		try:
+ */
+  __Pyx_INCREF(__pyx_v_database);
+  __pyx_v__database = __pyx_v_database;
+
+  /* "db_connection.pyx":46
+ * 		_database = database
+ * 
+ * 		try:             # <<<<<<<<<<<<<<
+ * 			connection = psycopg2.connect("host=_host,username=_username,password=_password,database=_database")
+ * 			return connection
+ */
+  {
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    __Pyx_ExceptionSave(&__pyx_t_4, &__pyx_t_5, &__pyx_t_6);
+    __Pyx_XGOTREF(__pyx_t_4);
+    __Pyx_XGOTREF(__pyx_t_5);
+    __Pyx_XGOTREF(__pyx_t_6);
+    /*try:*/ {
+
+      /* "db_connection.pyx":47
+ * 
+ * 		try:
+ * 			connection = psycopg2.connect("host=_host,username=_username,password=_password,database=_database")             # <<<<<<<<<<<<<<
+ * 			return connection
+ * 		except MySQLdb.Error, e:
+ */
+      __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_psycopg2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_connect); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_v_connection = __pyx_t_1;
+      __pyx_t_1 = 0;
+
+      /* "db_connection.pyx":48
+ * 		try:
+ * 			connection = psycopg2.connect("host=_host,username=_username,password=_password,database=_database")
+ * 			return connection             # <<<<<<<<<<<<<<
+ * 		except MySQLdb.Error, e:
+ * 			print "Error %d: %s" % (e.args[0], e.args[1])
+ */
+      __Pyx_XDECREF(__pyx_r);
+      __Pyx_INCREF(__pyx_v_connection);
+      __pyx_r = __pyx_v_connection;
+      goto __pyx_L9_try_return;
+
+      /* "db_connection.pyx":46
+ * 		_database = database
+ * 
+ * 		try:             # <<<<<<<<<<<<<<
+ * 			connection = psycopg2.connect("host=_host,username=_username,password=_password,database=_database")
+ * 			return connection
+ */
+    }
+    __pyx_L5_error:;
+    __Pyx_PyThreadState_assign
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "db_connection.pyx":49
+ * 			connection = psycopg2.connect("host=_host,username=_username,password=_password,database=_database")
+ * 			return connection
+ * 		except MySQLdb.Error, e:             # <<<<<<<<<<<<<<
+ * 			print "Error %d: %s" % (e.args[0], e.args[1])
+ * 			return None
+ */
+    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_MySQLdb); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L7_except_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Error); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L7_except_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_7 = __Pyx_PyErr_ExceptionMatches(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (__pyx_t_7) {
+      __Pyx_AddTraceback("db_connects.DbConnection.postgres_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_1, &__pyx_t_8) < 0) __PYX_ERR(0, 49, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_GOTREF(__pyx_t_8);
+      __Pyx_INCREF(__pyx_t_1);
+      __pyx_v_e = __pyx_t_1;
+
+      /* "db_connection.pyx":50
+ * 			return connection
+ * 		except MySQLdb.Error, e:
+ * 			print "Error %d: %s" % (e.args[0], e.args[1])             # <<<<<<<<<<<<<<
+ * 			return None
+ * 
+ */
+      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_args); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 50, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_t_10 = __Pyx_GetItemInt(__pyx_t_9, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 50, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_10);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_args); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 50, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_t_11 = __Pyx_GetItemInt(__pyx_t_9, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 50, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_11);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 50, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_GIVEREF(__pyx_t_10);
+      PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_10);
+      __Pyx_GIVEREF(__pyx_t_11);
+      PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_11);
+      __pyx_t_10 = 0;
+      __pyx_t_11 = 0;
+      __pyx_t_11 = __Pyx_PyString_Format(__pyx_kp_s_Error_d_s, __pyx_t_9); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 50, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_11);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      if (__Pyx_PrintOne(0, __pyx_t_11) < 0) __PYX_ERR(0, 50, __pyx_L7_except_error)
+      __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+
+      /* "db_connection.pyx":51
+ * 		except MySQLdb.Error, e:
+ * 			print "Error %d: %s" % (e.args[0], e.args[1])
+ * 			return None             # <<<<<<<<<<<<<<
+ * 
+ * 	def mysql_db_connect(self,host=None,username=None,password=None,database=None):
+ */
+      __Pyx_XDECREF(__pyx_r);
+      __Pyx_INCREF(Py_None);
+      __pyx_r = Py_None;
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      goto __pyx_L8_except_return;
+    }
+    goto __pyx_L7_except_error;
+    __pyx_L7_except_error:;
+
+    /* "db_connection.pyx":46
+ * 		_database = database
+ * 
+ * 		try:             # <<<<<<<<<<<<<<
+ * 			connection = psycopg2.connect("host=_host,username=_username,password=_password,database=_database")
+ * 			return connection
+ */
+    __Pyx_PyThreadState_assign
+    __Pyx_XGIVEREF(__pyx_t_4);
+    __Pyx_XGIVEREF(__pyx_t_5);
+    __Pyx_XGIVEREF(__pyx_t_6);
+    __Pyx_ExceptionReset(__pyx_t_4, __pyx_t_5, __pyx_t_6);
+    goto __pyx_L1_error;
+    __pyx_L9_try_return:;
+    __Pyx_PyThreadState_assign
+    __Pyx_XGIVEREF(__pyx_t_4);
+    __Pyx_XGIVEREF(__pyx_t_5);
+    __Pyx_XGIVEREF(__pyx_t_6);
+    __Pyx_ExceptionReset(__pyx_t_4, __pyx_t_5, __pyx_t_6);
+    goto __pyx_L0;
+    __pyx_L8_except_return:;
+    __Pyx_PyThreadState_assign
+    __Pyx_XGIVEREF(__pyx_t_4);
+    __Pyx_XGIVEREF(__pyx_t_5);
+    __Pyx_XGIVEREF(__pyx_t_6);
+    __Pyx_ExceptionReset(__pyx_t_4, __pyx_t_5, __pyx_t_6);
+    goto __pyx_L0;
+  }
+
+  /* "db_connection.pyx":40
+ * 
+ * 
+ * 	def postgres_db_connect(self,host=None,username=None,password=None,database=None):             # <<<<<<<<<<<<<<
+ * 		_host = host or LOCALHOST
+ * 		_username = username
  */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("db_connects.DbConnection.redis_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_AddTraceback("db_connects.DbConnection.postgres_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v__host);
+  __Pyx_XDECREF(__pyx_v__username);
   __Pyx_XDECREF(__pyx_v__password);
   __Pyx_XDECREF(__pyx_v__database);
-  __Pyx_XDECREF(__pyx_v__port);
   __Pyx_XDECREF(__pyx_v_connection);
+  __Pyx_XDECREF(__pyx_v_e);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "db_connection.pyx":53
+ * 			return None
+ * 
+ * 	def mysql_db_connect(self,host=None,username=None,password=None,database=None):             # <<<<<<<<<<<<<<
+ * 		_host = host or LOCALHOST
+ * 		_username = username
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_11db_connects_12DbConnection_7mysql_db_connect(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_11db_connects_12DbConnection_7mysql_db_connect(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_host = 0;
+  PyObject *__pyx_v_username = 0;
+  PyObject *__pyx_v_password = 0;
+  PyObject *__pyx_v_database = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("mysql_db_connect (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_host,&__pyx_n_s_username,&__pyx_n_s_password,&__pyx_n_s_database,0};
+    PyObject* values[4] = {0,0,0,0};
+    values[0] = ((PyObject *)Py_None);
+    values[1] = ((PyObject *)Py_None);
+    values[2] = ((PyObject *)Py_None);
+    values[3] = ((PyObject *)Py_None);
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_host);
+          if (value) { values[0] = value; kw_args--; }
+        }
+        case  1:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_username);
+          if (value) { values[1] = value; kw_args--; }
+        }
+        case  2:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_password);
+          if (value) { values[2] = value; kw_args--; }
+        }
+        case  3:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_database);
+          if (value) { values[3] = value; kw_args--; }
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "mysql_db_connect") < 0)) __PYX_ERR(0, 53, __pyx_L3_error)
+      }
+    } else {
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    __pyx_v_host = values[0];
+    __pyx_v_username = values[1];
+    __pyx_v_password = values[2];
+    __pyx_v_database = values[3];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("mysql_db_connect", 0, 0, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 53, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("db_connects.DbConnection.mysql_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_11db_connects_12DbConnection_6mysql_db_connect(((struct __pyx_obj_11db_connects_DbConnection *)__pyx_v_self), __pyx_v_host, __pyx_v_username, __pyx_v_password, __pyx_v_database);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_11db_connects_12DbConnection_6mysql_db_connect(CYTHON_UNUSED struct __pyx_obj_11db_connects_DbConnection *__pyx_v_self, PyObject *__pyx_v_host, PyObject *__pyx_v_username, PyObject *__pyx_v_password, PyObject *__pyx_v_database) {
+  PyObject *__pyx_v__host = NULL;
+  PyObject *__pyx_v__username = NULL;
+  PyObject *__pyx_v__password = NULL;
+  PyObject *__pyx_v__database = NULL;
+  PyObject *__pyx_v_connection = NULL;
+  PyObject *__pyx_v_e = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_7 = NULL;
+  Py_ssize_t __pyx_t_8;
+  PyObject *__pyx_t_9 = NULL;
+  int __pyx_t_10;
+  PyObject *__pyx_t_11 = NULL;
+  PyObject *__pyx_t_12 = NULL;
+  __Pyx_RefNannySetupContext("mysql_db_connect", 0);
+
+  /* "db_connection.pyx":54
+ * 
+ * 	def mysql_db_connect(self,host=None,username=None,password=None,database=None):
+ * 		_host = host or LOCALHOST             # <<<<<<<<<<<<<<
+ * 		_username = username
+ * 		_password = password
+ */
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_host); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 54, __pyx_L1_error)
+  if (!__pyx_t_2) {
+  } else {
+    __Pyx_INCREF(__pyx_v_host);
+    __pyx_t_1 = __pyx_v_host;
+    goto __pyx_L3_bool_binop_done;
+  }
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_LOCALHOST); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_t_3);
+  __pyx_t_1 = __pyx_t_3;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_L3_bool_binop_done:;
+  __pyx_v__host = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "db_connection.pyx":55
+ * 	def mysql_db_connect(self,host=None,username=None,password=None,database=None):
+ * 		_host = host or LOCALHOST
+ * 		_username = username             # <<<<<<<<<<<<<<
+ * 		_password = password
+ * 		_database = database
+ */
+  __Pyx_INCREF(__pyx_v_username);
+  __pyx_v__username = __pyx_v_username;
+
+  /* "db_connection.pyx":56
+ * 		_host = host or LOCALHOST
+ * 		_username = username
+ * 		_password = password             # <<<<<<<<<<<<<<
+ * 		_database = database
+ * 
+ */
+  __Pyx_INCREF(__pyx_v_password);
+  __pyx_v__password = __pyx_v_password;
+
+  /* "db_connection.pyx":57
+ * 		_username = username
+ * 		_password = password
+ * 		_database = database             # <<<<<<<<<<<<<<
+ * 
+ * 		try:
+ */
+  __Pyx_INCREF(__pyx_v_database);
+  __pyx_v__database = __pyx_v_database;
+
+  /* "db_connection.pyx":59
+ * 		_database = database
+ * 
+ * 		try:             # <<<<<<<<<<<<<<
+ * 			connection = MySQLdb.connect(_host,_username,_password,_database)
+ * 			return connection
+ */
+  {
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    __Pyx_ExceptionSave(&__pyx_t_4, &__pyx_t_5, &__pyx_t_6);
+    __Pyx_XGOTREF(__pyx_t_4);
+    __Pyx_XGOTREF(__pyx_t_5);
+    __Pyx_XGOTREF(__pyx_t_6);
+    /*try:*/ {
+
+      /* "db_connection.pyx":60
+ * 
+ * 		try:
+ * 			connection = MySQLdb.connect(_host,_username,_password,_database)             # <<<<<<<<<<<<<<
+ * 			return connection
+ * 		except MySQLdb.Error, e:
+ */
+      __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_MySQLdb); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 60, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_connect); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 60, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_3 = NULL;
+      __pyx_t_8 = 0;
+      if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_7))) {
+        __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_7);
+        if (likely(__pyx_t_3)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_7);
+          __Pyx_INCREF(__pyx_t_3);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_7, function);
+          __pyx_t_8 = 1;
+        }
+      }
+      __pyx_t_9 = PyTuple_New(4+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 60, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      if (__pyx_t_3) {
+        __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_3); __pyx_t_3 = NULL;
+      }
+      __Pyx_INCREF(__pyx_v__host);
+      __Pyx_GIVEREF(__pyx_v__host);
+      PyTuple_SET_ITEM(__pyx_t_9, 0+__pyx_t_8, __pyx_v__host);
+      __Pyx_INCREF(__pyx_v__username);
+      __Pyx_GIVEREF(__pyx_v__username);
+      PyTuple_SET_ITEM(__pyx_t_9, 1+__pyx_t_8, __pyx_v__username);
+      __Pyx_INCREF(__pyx_v__password);
+      __Pyx_GIVEREF(__pyx_v__password);
+      PyTuple_SET_ITEM(__pyx_t_9, 2+__pyx_t_8, __pyx_v__password);
+      __Pyx_INCREF(__pyx_v__database);
+      __Pyx_GIVEREF(__pyx_v__database);
+      PyTuple_SET_ITEM(__pyx_t_9, 3+__pyx_t_8, __pyx_v__database);
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_v_connection = __pyx_t_1;
+      __pyx_t_1 = 0;
+
+      /* "db_connection.pyx":61
+ * 		try:
+ * 			connection = MySQLdb.connect(_host,_username,_password,_database)
+ * 			return connection             # <<<<<<<<<<<<<<
+ * 		except MySQLdb.Error, e:
+ * 			print "Error %d: %s" % (e.args[0], e.args[1])
+ */
+      __Pyx_XDECREF(__pyx_r);
+      __Pyx_INCREF(__pyx_v_connection);
+      __pyx_r = __pyx_v_connection;
+      goto __pyx_L9_try_return;
+
+      /* "db_connection.pyx":59
+ * 		_database = database
+ * 
+ * 		try:             # <<<<<<<<<<<<<<
+ * 			connection = MySQLdb.connect(_host,_username,_password,_database)
+ * 			return connection
+ */
+    }
+    __pyx_L5_error:;
+    __Pyx_PyThreadState_assign
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "db_connection.pyx":62
+ * 			connection = MySQLdb.connect(_host,_username,_password,_database)
+ * 			return connection
+ * 		except MySQLdb.Error, e:             # <<<<<<<<<<<<<<
+ * 			print "Error %d: %s" % (e.args[0], e.args[1])
+ * 			return None
+ */
+    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_MySQLdb); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L7_except_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Error); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 62, __pyx_L7_except_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_10 = __Pyx_PyErr_ExceptionMatches(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (__pyx_t_10) {
+      __Pyx_AddTraceback("db_connects.DbConnection.mysql_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      if (__Pyx_GetException(&__pyx_t_7, &__pyx_t_1, &__pyx_t_9) < 0) __PYX_ERR(0, 62, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_INCREF(__pyx_t_1);
+      __pyx_v_e = __pyx_t_1;
+
+      /* "db_connection.pyx":63
+ * 			return connection
+ * 		except MySQLdb.Error, e:
+ * 			print "Error %d: %s" % (e.args[0], e.args[1])             # <<<<<<<<<<<<<<
+ * 			return None
+ * 
+ */
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_args); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_11 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 63, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_11);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_args); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_12 = __Pyx_GetItemInt(__pyx_t_3, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 63, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_12);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_GIVEREF(__pyx_t_11);
+      PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_11);
+      __Pyx_GIVEREF(__pyx_t_12);
+      PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_12);
+      __pyx_t_11 = 0;
+      __pyx_t_12 = 0;
+      __pyx_t_12 = __Pyx_PyString_Format(__pyx_kp_s_Error_d_s, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 63, __pyx_L7_except_error)
+      __Pyx_GOTREF(__pyx_t_12);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (__Pyx_PrintOne(0, __pyx_t_12) < 0) __PYX_ERR(0, 63, __pyx_L7_except_error)
+      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+
+      /* "db_connection.pyx":64
+ * 		except MySQLdb.Error, e:
+ * 			print "Error %d: %s" % (e.args[0], e.args[1])
+ * 			return None             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+      __Pyx_XDECREF(__pyx_r);
+      __Pyx_INCREF(Py_None);
+      __pyx_r = Py_None;
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      goto __pyx_L8_except_return;
+    }
+    goto __pyx_L7_except_error;
+    __pyx_L7_except_error:;
+
+    /* "db_connection.pyx":59
+ * 		_database = database
+ * 
+ * 		try:             # <<<<<<<<<<<<<<
+ * 			connection = MySQLdb.connect(_host,_username,_password,_database)
+ * 			return connection
+ */
+    __Pyx_PyThreadState_assign
+    __Pyx_XGIVEREF(__pyx_t_4);
+    __Pyx_XGIVEREF(__pyx_t_5);
+    __Pyx_XGIVEREF(__pyx_t_6);
+    __Pyx_ExceptionReset(__pyx_t_4, __pyx_t_5, __pyx_t_6);
+    goto __pyx_L1_error;
+    __pyx_L9_try_return:;
+    __Pyx_PyThreadState_assign
+    __Pyx_XGIVEREF(__pyx_t_4);
+    __Pyx_XGIVEREF(__pyx_t_5);
+    __Pyx_XGIVEREF(__pyx_t_6);
+    __Pyx_ExceptionReset(__pyx_t_4, __pyx_t_5, __pyx_t_6);
+    goto __pyx_L0;
+    __pyx_L8_except_return:;
+    __Pyx_PyThreadState_assign
+    __Pyx_XGIVEREF(__pyx_t_4);
+    __Pyx_XGIVEREF(__pyx_t_5);
+    __Pyx_XGIVEREF(__pyx_t_6);
+    __Pyx_ExceptionReset(__pyx_t_4, __pyx_t_5, __pyx_t_6);
+    goto __pyx_L0;
+  }
+
+  /* "db_connection.pyx":53
+ * 			return None
+ * 
+ * 	def mysql_db_connect(self,host=None,username=None,password=None,database=None):             # <<<<<<<<<<<<<<
+ * 		_host = host or LOCALHOST
+ * 		_username = username
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_XDECREF(__pyx_t_12);
+  __Pyx_AddTraceback("db_connects.DbConnection.mysql_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v__host);
+  __Pyx_XDECREF(__pyx_v__username);
+  __Pyx_XDECREF(__pyx_v__password);
+  __Pyx_XDECREF(__pyx_v__database);
+  __Pyx_XDECREF(__pyx_v_connection);
+  __Pyx_XDECREF(__pyx_v_e);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "db_connection.pyx":67
+ * 
+ * 
+ * 	def mongo_db_connect(self,host=None,username=None,password=None,database=None,port=None):#check for username and password             # <<<<<<<<<<<<<<
+ * 		_host = host or LOCALHOST
+ * 		_database = database
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_11db_connects_12DbConnection_9mongo_db_connect(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_11db_connects_12DbConnection_9mongo_db_connect(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_host = 0;
+  PyObject *__pyx_v_username = 0;
+  PyObject *__pyx_v_password = 0;
+  PyObject *__pyx_v_database = 0;
+  PyObject *__pyx_v_port = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("mongo_db_connect (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_host,&__pyx_n_s_username,&__pyx_n_s_password,&__pyx_n_s_database,&__pyx_n_s_port,0};
+    PyObject* values[5] = {0,0,0,0,0};
+    values[0] = ((PyObject *)Py_None);
+    values[1] = ((PyObject *)Py_None);
+    values[2] = ((PyObject *)Py_None);
+    values[3] = ((PyObject *)Py_None);
+    values[4] = ((PyObject *)Py_None);
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_host);
+          if (value) { values[0] = value; kw_args--; }
+        }
+        case  1:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_username);
+          if (value) { values[1] = value; kw_args--; }
+        }
+        case  2:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_password);
+          if (value) { values[2] = value; kw_args--; }
+        }
+        case  3:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_database);
+          if (value) { values[3] = value; kw_args--; }
+        }
+        case  4:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_port);
+          if (value) { values[4] = value; kw_args--; }
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "mongo_db_connect") < 0)) __PYX_ERR(0, 67, __pyx_L3_error)
+      }
+    } else {
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    __pyx_v_host = values[0];
+    __pyx_v_username = values[1];
+    __pyx_v_password = values[2];
+    __pyx_v_database = values[3];
+    __pyx_v_port = values[4];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("mongo_db_connect", 0, 0, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 67, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("db_connects.DbConnection.mongo_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_11db_connects_12DbConnection_8mongo_db_connect(((struct __pyx_obj_11db_connects_DbConnection *)__pyx_v_self), __pyx_v_host, __pyx_v_username, __pyx_v_password, __pyx_v_database, __pyx_v_port);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_11db_connects_12DbConnection_8mongo_db_connect(CYTHON_UNUSED struct __pyx_obj_11db_connects_DbConnection *__pyx_v_self, PyObject *__pyx_v_host, PyObject *__pyx_v_username, PyObject *__pyx_v_password, PyObject *__pyx_v_database, PyObject *__pyx_v_port) {
+  PyObject *__pyx_v__host = NULL;
+  CYTHON_UNUSED PyObject *__pyx_v__database = NULL;
+  CYTHON_UNUSED long __pyx_v__port;
+  PyObject *__pyx_v_url = NULL;
+  PyObject *__pyx_v_connection = NULL;
+  PyObject *__pyx_v_sys = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_t_4;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_9 = NULL;
+  PyObject *__pyx_t_10 = NULL;
+  PyObject *__pyx_t_11 = NULL;
+  __Pyx_RefNannySetupContext("mongo_db_connect", 0);
+
+  /* "db_connection.pyx":68
+ * 
+ * 	def mongo_db_connect(self,host=None,username=None,password=None,database=None,port=None):#check for username and password
+ * 		_host = host or LOCALHOST             # <<<<<<<<<<<<<<
+ * 		_database = database
+ * 		print port#None check
+ */
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_host); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 68, __pyx_L1_error)
+  if (!__pyx_t_2) {
+  } else {
+    __Pyx_INCREF(__pyx_v_host);
+    __pyx_t_1 = __pyx_v_host;
+    goto __pyx_L3_bool_binop_done;
+  }
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_LOCALHOST); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_t_3);
+  __pyx_t_1 = __pyx_t_3;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_L3_bool_binop_done:;
+  __pyx_v__host = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "db_connection.pyx":69
+ * 	def mongo_db_connect(self,host=None,username=None,password=None,database=None,port=None):#check for username and password
+ * 		_host = host or LOCALHOST
+ * 		_database = database             # <<<<<<<<<<<<<<
+ * 		print port#None check
+ * 		if not port:
+ */
+  __Pyx_INCREF(__pyx_v_database);
+  __pyx_v__database = __pyx_v_database;
+
+  /* "db_connection.pyx":70
+ * 		_host = host or LOCALHOST
+ * 		_database = database
+ * 		print port#None check             # <<<<<<<<<<<<<<
+ * 		if not port:
+ * 			_port = 27017
+ */
+  if (__Pyx_PrintOne(0, __pyx_v_port) < 0) __PYX_ERR(0, 70, __pyx_L1_error)
+
+  /* "db_connection.pyx":71
+ * 		_database = database
+ * 		print port#None check
+ * 		if not port:             # <<<<<<<<<<<<<<
+ * 			_port = 27017
+ * 		url = '%s:%s' % (_host,port)
+ */
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_port); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_4 = ((!__pyx_t_2) != 0);
+  if (__pyx_t_4) {
+
+    /* "db_connection.pyx":72
+ * 		print port#None check
+ * 		if not port:
+ * 			_port = 27017             # <<<<<<<<<<<<<<
+ * 		url = '%s:%s' % (_host,port)
+ * 
+ */
+    __pyx_v__port = 0x6989;
+
+    /* "db_connection.pyx":71
+ * 		_database = database
+ * 		print port#None check
+ * 		if not port:             # <<<<<<<<<<<<<<
+ * 			_port = 27017
+ * 		url = '%s:%s' % (_host,port)
+ */
+  }
+
+  /* "db_connection.pyx":73
+ * 		if not port:
+ * 			_port = 27017
+ * 		url = '%s:%s' % (_host,port)             # <<<<<<<<<<<<<<
+ * 
+ * 		try:
+ */
+  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(__pyx_v__host);
+  __Pyx_GIVEREF(__pyx_v__host);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v__host);
+  __Pyx_INCREF(__pyx_v_port);
+  __Pyx_GIVEREF(__pyx_v_port);
+  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_v_port);
+  __pyx_t_3 = __Pyx_PyString_Format(__pyx_kp_s_s_s, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v_url = ((PyObject*)__pyx_t_3);
+  __pyx_t_3 = 0;
+
+  /* "db_connection.pyx":75
+ * 		url = '%s:%s' % (_host,port)
+ * 
+ * 		try:             # <<<<<<<<<<<<<<
+ * 			if any([username is None,password is None ]):
+ * 				connection = MongoClient(url,connect=False)
+ */
+  {
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    __Pyx_ExceptionSave(&__pyx_t_5, &__pyx_t_6, &__pyx_t_7);
+    __Pyx_XGOTREF(__pyx_t_5);
+    __Pyx_XGOTREF(__pyx_t_6);
+    __Pyx_XGOTREF(__pyx_t_7);
+    /*try:*/ {
+
+      /* "db_connection.pyx":76
+ * 
+ * 		try:
+ * 			if any([username is None,password is None ]):             # <<<<<<<<<<<<<<
+ * 				connection = MongoClient(url,connect=False)
+ * 			else:
+ */
+      __pyx_t_4 = (__pyx_v_username == Py_None);
+      __pyx_t_3 = __Pyx_PyBool_FromLong(__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L6_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = (__pyx_v_password == Py_None);
+      __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L6_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_8 = PyList_New(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 76, __pyx_L6_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __Pyx_GIVEREF(__pyx_t_3);
+      PyList_SET_ITEM(__pyx_t_8, 0, __pyx_t_3);
+      __Pyx_GIVEREF(__pyx_t_1);
+      PyList_SET_ITEM(__pyx_t_8, 1, __pyx_t_1);
+      __pyx_t_3 = 0;
+      __pyx_t_1 = 0;
+      __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L6_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_GIVEREF(__pyx_t_8);
+      PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_8);
+      __pyx_t_8 = 0;
+      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_any, __pyx_t_1, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 76, __pyx_L6_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 76, __pyx_L6_error)
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      if (__pyx_t_4) {
+
+        /* "db_connection.pyx":77
+ * 		try:
+ * 			if any([username is None,password is None ]):
+ * 				connection = MongoClient(url,connect=False)             # <<<<<<<<<<<<<<
+ * 			else:
+ * 				connection = MongoClient(url,username=username,password=password,connect=False)
+ */
+        __pyx_t_8 = __Pyx_GetModuleGlobalName(__pyx_n_s_MongoClient); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 77, __pyx_L6_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L6_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __Pyx_INCREF(__pyx_v_url);
+        __Pyx_GIVEREF(__pyx_v_url);
+        PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_url);
+        __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L6_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_connect, Py_False) < 0) __PYX_ERR(0, 77, __pyx_L6_error)
+        __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 77, __pyx_L6_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        __pyx_v_connection = __pyx_t_9;
+        __pyx_t_9 = 0;
+
+        /* "db_connection.pyx":76
+ * 
+ * 		try:
+ * 			if any([username is None,password is None ]):             # <<<<<<<<<<<<<<
+ * 				connection = MongoClient(url,connect=False)
+ * 			else:
+ */
+        goto __pyx_L14;
+      }
+
+      /* "db_connection.pyx":79
+ * 				connection = MongoClient(url,connect=False)
+ * 			else:
+ * 				connection = MongoClient(url,username=username,password=password,connect=False)             # <<<<<<<<<<<<<<
+ * 			return connection
+ * 		except:
+ */
+      /*else*/ {
+        __pyx_t_9 = __Pyx_GetModuleGlobalName(__pyx_n_s_MongoClient); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 79, __pyx_L6_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L6_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __Pyx_INCREF(__pyx_v_url);
+        __Pyx_GIVEREF(__pyx_v_url);
+        PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_url);
+        __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L6_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_username, __pyx_v_username) < 0) __PYX_ERR(0, 79, __pyx_L6_error)
+        if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_password, __pyx_v_password) < 0) __PYX_ERR(0, 79, __pyx_L6_error)
+        if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_connect, Py_False) < 0) __PYX_ERR(0, 79, __pyx_L6_error)
+        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 79, __pyx_L6_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __pyx_v_connection = __pyx_t_8;
+        __pyx_t_8 = 0;
+      }
+      __pyx_L14:;
+
+      /* "db_connection.pyx":80
+ * 			else:
+ * 				connection = MongoClient(url,username=username,password=password,connect=False)
+ * 			return connection             # <<<<<<<<<<<<<<
+ * 		except:
+ * 			print "Error while connecting mongo db"
+ */
+      __Pyx_XDECREF(__pyx_r);
+      __Pyx_INCREF(__pyx_v_connection);
+      __pyx_r = __pyx_v_connection;
+      goto __pyx_L10_try_return;
+
+      /* "db_connection.pyx":75
+ * 		url = '%s:%s' % (_host,port)
+ * 
+ * 		try:             # <<<<<<<<<<<<<<
+ * 			if any([username is None,password is None ]):
+ * 				connection = MongoClient(url,connect=False)
+ */
+    }
+    __pyx_L6_error:;
+    __Pyx_PyThreadState_assign
+    __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+
+    /* "db_connection.pyx":81
+ * 				connection = MongoClient(url,username=username,password=password,connect=False)
+ * 			return connection
+ * 		except:             # <<<<<<<<<<<<<<
+ * 			print "Error while connecting mongo db"
+ * 			import sys
+ */
+    /*except:*/ {
+      __Pyx_AddTraceback("db_connects.DbConnection.mongo_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      if (__Pyx_GetException(&__pyx_t_8, &__pyx_t_1, &__pyx_t_3) < 0) __PYX_ERR(0, 81, __pyx_L8_except_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_GOTREF(__pyx_t_3);
+
+      /* "db_connection.pyx":82
+ * 			return connection
+ * 		except:
+ * 			print "Error while connecting mongo db"             # <<<<<<<<<<<<<<
+ * 			import sys
+ * 			print sys.exc_info()
+ */
+      if (__Pyx_PrintOne(0, __pyx_kp_s_Error_while_connecting_mongo_db) < 0) __PYX_ERR(0, 82, __pyx_L8_except_error)
+
+      /* "db_connection.pyx":83
+ * 		except:
+ * 			print "Error while connecting mongo db"
+ * 			import sys             # <<<<<<<<<<<<<<
+ * 			print sys.exc_info()
+ * 			return None
+ */
+      __pyx_t_9 = __Pyx_Import(__pyx_n_s_sys, 0, -1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 83, __pyx_L8_except_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_v_sys = __pyx_t_9;
+      __pyx_t_9 = 0;
+
+      /* "db_connection.pyx":84
+ * 			print "Error while connecting mongo db"
+ * 			import sys
+ * 			print sys.exc_info()             # <<<<<<<<<<<<<<
+ * 			return None
+ * 
+ */
+      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_sys, __pyx_n_s_exc_info); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 84, __pyx_L8_except_error)
+      __Pyx_GOTREF(__pyx_t_10);
+      __pyx_t_11 = NULL;
+      if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_10))) {
+        __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_10);
+        if (likely(__pyx_t_11)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_10);
+          __Pyx_INCREF(__pyx_t_11);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_10, function);
+        }
+      }
+      if (__pyx_t_11) {
+        __pyx_t_9 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_11); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 84, __pyx_L8_except_error)
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+      } else {
+        __pyx_t_9 = __Pyx_PyObject_CallNoArg(__pyx_t_10); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 84, __pyx_L8_except_error)
+      }
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+      if (__Pyx_PrintOne(0, __pyx_t_9) < 0) __PYX_ERR(0, 84, __pyx_L8_except_error)
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+
+      /* "db_connection.pyx":85
+ * 			import sys
+ * 			print sys.exc_info()
+ * 			return None             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+      __Pyx_XDECREF(__pyx_r);
+      __Pyx_INCREF(Py_None);
+      __pyx_r = Py_None;
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      goto __pyx_L9_except_return;
+    }
+    __pyx_L8_except_error:;
+
+    /* "db_connection.pyx":75
+ * 		url = '%s:%s' % (_host,port)
+ * 
+ * 		try:             # <<<<<<<<<<<<<<
+ * 			if any([username is None,password is None ]):
+ * 				connection = MongoClient(url,connect=False)
+ */
+    __Pyx_PyThreadState_assign
+    __Pyx_XGIVEREF(__pyx_t_5);
+    __Pyx_XGIVEREF(__pyx_t_6);
+    __Pyx_XGIVEREF(__pyx_t_7);
+    __Pyx_ExceptionReset(__pyx_t_5, __pyx_t_6, __pyx_t_7);
+    goto __pyx_L1_error;
+    __pyx_L10_try_return:;
+    __Pyx_PyThreadState_assign
+    __Pyx_XGIVEREF(__pyx_t_5);
+    __Pyx_XGIVEREF(__pyx_t_6);
+    __Pyx_XGIVEREF(__pyx_t_7);
+    __Pyx_ExceptionReset(__pyx_t_5, __pyx_t_6, __pyx_t_7);
+    goto __pyx_L0;
+    __pyx_L9_except_return:;
+    __Pyx_PyThreadState_assign
+    __Pyx_XGIVEREF(__pyx_t_5);
+    __Pyx_XGIVEREF(__pyx_t_6);
+    __Pyx_XGIVEREF(__pyx_t_7);
+    __Pyx_ExceptionReset(__pyx_t_5, __pyx_t_6, __pyx_t_7);
+    goto __pyx_L0;
+  }
+
+  /* "db_connection.pyx":67
+ * 
+ * 
+ * 	def mongo_db_connect(self,host=None,username=None,password=None,database=None,port=None):#check for username and password             # <<<<<<<<<<<<<<
+ * 		_host = host or LOCALHOST
+ * 		_database = database
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_AddTraceback("db_connects.DbConnection.mongo_db_connect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v__host);
+  __Pyx_XDECREF(__pyx_v__database);
+  __Pyx_XDECREF(__pyx_v_url);
+  __Pyx_XDECREF(__pyx_v_connection);
+  __Pyx_XDECREF(__pyx_v_sys);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -1180,7 +2616,10 @@ static void __pyx_tp_dealloc_11db_connects_DbConnection(PyObject *o) {
 }
 
 static PyMethodDef __pyx_methods_11db_connects_DbConnection[] = {
-  {"redis_db_connect", (PyCFunction)__pyx_pw_11db_connects_12DbConnection_1redis_db_connect, METH_VARARGS|METH_KEYWORDS, 0},
+  {"redis_db_connect", (PyCFunction)__pyx_pw_11db_connects_12DbConnection_3redis_db_connect, METH_VARARGS|METH_KEYWORDS, 0},
+  {"postgres_db_connect", (PyCFunction)__pyx_pw_11db_connects_12DbConnection_5postgres_db_connect, METH_VARARGS|METH_KEYWORDS, 0},
+  {"mysql_db_connect", (PyCFunction)__pyx_pw_11db_connects_12DbConnection_7mysql_db_connect, METH_VARARGS|METH_KEYWORDS, 0},
+  {"mongo_db_connect", (PyCFunction)__pyx_pw_11db_connects_12DbConnection_9mongo_db_connect, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
@@ -1225,7 +2664,7 @@ static PyTypeObject __pyx_type_11db_connects_DbConnection = {
   0, /*tp_descr_get*/
   0, /*tp_descr_set*/
   0, /*tp_dictoffset*/
-  0, /*tp_init*/
+  __pyx_pw_11db_connects_12DbConnection_1__init__, /*tp_init*/
   0, /*tp_alloc*/
   __pyx_tp_new_11db_connects_DbConnection, /*tp_new*/
   0, /*tp_free*/
@@ -1246,6 +2685,264 @@ static PyMethodDef __pyx_methods[] = {
   {0, 0, 0, 0}
 };
 
+static int __pyx_import_star_set(PyObject *o, PyObject* py_name, char *name) {
+  static const char* internal_type_names[] = {
+    "DbConnection",
+    "__pyx_ctuple_long",
+    "__pyx_ctuple_long_struct",
+    0
+  };
+  const char** type_name = internal_type_names;
+  while (*type_name) {
+    if (__Pyx_StrEq(name, *type_name)) {
+      PyErr_Format(PyExc_TypeError, "Cannot overwrite C type %s", name);
+      goto bad;
+    }
+    type_name++;
+  }
+  if (0);
+  else {
+    if (PyObject_SetAttr(__pyx_m, py_name, o) < 0) goto bad;
+  }
+  return 0;
+  bad:
+  return -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static int
+__Pyx_import_all_from(PyObject *locals, PyObject *v)
+{
+    PyObject *all = PyObject_GetAttrString(v, "__all__");
+    PyObject *dict, *name, *value;
+    int skip_leading_underscores = 0;
+    int pos, err;
+
+    if (all == NULL) {
+        if (!PyErr_ExceptionMatches(PyExc_AttributeError))
+            return -1;
+        PyErr_Clear();
+        dict = PyObject_GetAttrString(v, "__dict__");
+        if (dict == NULL) {
+            if (!PyErr_ExceptionMatches(PyExc_AttributeError))
+                return -1;
+            PyErr_SetString(PyExc_ImportError,
+            "from-import-* object has no __dict__ and no __all__");
+            return -1;
+        }
+#if PY_MAJOR_VERSION < 3
+        all = PyObject_CallMethod(dict, (char *)"keys", NULL);
+#else
+        all = PyMapping_Keys(dict);
+#endif
+        Py_DECREF(dict);
+        if (all == NULL)
+            return -1;
+        skip_leading_underscores = 1;
+    }
+
+    for (pos = 0, err = 0; ; pos++) {
+        name = PySequence_GetItem(all, pos);
+        if (name == NULL) {
+            if (!PyErr_ExceptionMatches(PyExc_IndexError))
+                err = -1;
+            else
+                PyErr_Clear();
+            break;
+        }
+        if (skip_leading_underscores &&
+#if PY_MAJOR_VERSION < 3
+            PyString_Check(name) &&
+            PyString_AS_STRING(name)[0] == '_')
+#else
+            PyUnicode_Check(name) &&
+            PyUnicode_AS_UNICODE(name)[0] == '_')
+#endif
+        {
+            Py_DECREF(name);
+            continue;
+        }
+        value = PyObject_GetAttr(v, name);
+        if (value == NULL)
+            err = -1;
+        else if (PyDict_CheckExact(locals))
+            err = PyDict_SetItem(locals, name, value);
+        else
+            err = PyObject_SetItem(locals, name, value);
+        Py_DECREF(name);
+        Py_XDECREF(value);
+        if (err != 0)
+            break;
+    }
+    Py_DECREF(all);
+    return err;
+}
+
+
+static int __pyx_import_star(PyObject* m) {
+
+    int i;
+    int ret = -1;
+    char* s;
+    PyObject *locals = 0;
+    PyObject *list = 0;
+#if PY_MAJOR_VERSION >= 3
+    PyObject *utf8_name = 0;
+#endif
+    PyObject *name;
+    PyObject *item;
+
+    locals = PyDict_New();              if (!locals) goto bad;
+    if (__Pyx_import_all_from(locals, m) < 0) goto bad;
+    list = PyDict_Items(locals);        if (!list) goto bad;
+
+    for(i=0; i<PyList_GET_SIZE(list); i++) {
+        name = PyTuple_GET_ITEM(PyList_GET_ITEM(list, i), 0);
+        item = PyTuple_GET_ITEM(PyList_GET_ITEM(list, i), 1);
+#if PY_MAJOR_VERSION >= 3
+        utf8_name = PyUnicode_AsUTF8String(name);
+        if (!utf8_name) goto bad;
+        s = PyBytes_AS_STRING(utf8_name);
+        if (__pyx_import_star_set(item, name, s) < 0) goto bad;
+        Py_DECREF(utf8_name); utf8_name = 0;
+#else
+        s = PyString_AsString(name);
+        if (!s) goto bad;
+        if (__pyx_import_star_set(item, name, s) < 0) goto bad;
+#endif
+    }
+    ret = 0;
+
+bad:
+    Py_XDECREF(locals);
+    Py_XDECREF(list);
+#if PY_MAJOR_VERSION >= 3
+    Py_XDECREF(utf8_name);
+#endif
+    return ret;
+}
+
+
+
 #if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef __pyx_moduledef = {
   #if PY_VERSION_HEX < 0x03020000
@@ -1265,41 +2962,78 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
+  {&__pyx_n_s_Error, __pyx_k_Error, sizeof(__pyx_k_Error), 0, 0, 1, 1},
+  {&__pyx_kp_s_Error_d_s, __pyx_k_Error_d_s, sizeof(__pyx_k_Error_d_s), 0, 0, 1, 0},
+  {&__pyx_kp_s_Error_while_connecting_mongo_db, __pyx_k_Error_while_connecting_mongo_db, sizeof(__pyx_k_Error_while_connecting_mongo_db), 0, 0, 1, 0},
   {&__pyx_kp_s_Error_while_connecting_redis_ser, __pyx_k_Error_while_connecting_redis_ser, sizeof(__pyx_k_Error_while_connecting_redis_ser), 0, 0, 1, 0},
+  {&__pyx_n_s_LOCALHOST, __pyx_k_LOCALHOST, sizeof(__pyx_k_LOCALHOST), 0, 0, 1, 1},
+  {&__pyx_n_s_MongoClient, __pyx_k_MongoClient, sizeof(__pyx_k_MongoClient), 0, 0, 1, 1},
+  {&__pyx_n_s_MySQLdb, __pyx_k_MySQLdb, sizeof(__pyx_k_MySQLdb), 0, 0, 1, 1},
   {&__pyx_n_s_REDIS_DATABASE_HOST, __pyx_k_REDIS_DATABASE_HOST, sizeof(__pyx_k_REDIS_DATABASE_HOST), 0, 0, 1, 1},
   {&__pyx_n_s_REDIS_DATABASE_PASSWORD, __pyx_k_REDIS_DATABASE_PASSWORD, sizeof(__pyx_k_REDIS_DATABASE_PASSWORD), 0, 0, 1, 1},
   {&__pyx_n_s_REDIS_PORT, __pyx_k_REDIS_PORT, sizeof(__pyx_k_REDIS_PORT), 0, 0, 1, 1},
   {&__pyx_n_s_Redis, __pyx_k_Redis, sizeof(__pyx_k_Redis), 0, 0, 1, 1},
+  {&__pyx_n_s_StorageConstants, __pyx_k_StorageConstants, sizeof(__pyx_k_StorageConstants), 0, 0, 1, 1},
+  {&__pyx_n_s__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 0, 1, 1},
+  {&__pyx_n_s_any, __pyx_k_any, sizeof(__pyx_k_any), 0, 0, 1, 1},
+  {&__pyx_n_s_args, __pyx_k_args, sizeof(__pyx_k_args), 0, 0, 1, 1},
+  {&__pyx_n_s_connect, __pyx_k_connect, sizeof(__pyx_k_connect), 0, 0, 1, 1},
   {&__pyx_n_s_database, __pyx_k_database, sizeof(__pyx_k_database), 0, 0, 1, 1},
   {&__pyx_n_s_db, __pyx_k_db, sizeof(__pyx_k_db), 0, 0, 1, 1},
   {&__pyx_n_s_db_constants, __pyx_k_db_constants, sizeof(__pyx_k_db_constants), 0, 0, 1, 1},
   {&__pyx_n_s_end, __pyx_k_end, sizeof(__pyx_k_end), 0, 0, 1, 1},
+  {&__pyx_n_s_exc_info, __pyx_k_exc_info, sizeof(__pyx_k_exc_info), 0, 0, 1, 1},
   {&__pyx_n_s_file, __pyx_k_file, sizeof(__pyx_k_file), 0, 0, 1, 1},
   {&__pyx_n_s_host, __pyx_k_host, sizeof(__pyx_k_host), 0, 0, 1, 1},
+  {&__pyx_kp_s_host__host_username__username_pa, __pyx_k_host__host_username__username_pa, sizeof(__pyx_k_host__host_username__username_pa), 0, 0, 1, 0},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_password, __pyx_k_password, sizeof(__pyx_k_password), 0, 0, 1, 1},
   {&__pyx_n_s_port, __pyx_k_port, sizeof(__pyx_k_port), 0, 0, 1, 1},
   {&__pyx_n_s_print, __pyx_k_print, sizeof(__pyx_k_print), 0, 0, 1, 1},
+  {&__pyx_n_s_psycopg2, __pyx_k_psycopg2, sizeof(__pyx_k_psycopg2), 0, 0, 1, 1},
+  {&__pyx_n_s_pymongo, __pyx_k_pymongo, sizeof(__pyx_k_pymongo), 0, 0, 1, 1},
   {&__pyx_n_s_redis, __pyx_k_redis, sizeof(__pyx_k_redis), 0, 0, 1, 1},
+  {&__pyx_kp_s_s_s, __pyx_k_s_s, sizeof(__pyx_k_s_s), 0, 0, 1, 0},
   {&__pyx_n_s_sys, __pyx_k_sys, sizeof(__pyx_k_sys), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_username, __pyx_k_username, sizeof(__pyx_k_username), 0, 0, 1, 1},
+  {&__pyx_n_s_vh6HSwa9, __pyx_k_vh6HSwa9, sizeof(__pyx_k_vh6HSwa9), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
+  __pyx_builtin_any = __Pyx_GetBuiltinName(__pyx_n_s_any); if (!__pyx_builtin_any) __PYX_ERR(0, 76, __pyx_L1_error)
   return 0;
+  __pyx_L1_error:;
+  return -1;
 }
 
 static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
+
+  /* "db_connection.pyx":47
+ * 
+ * 		try:
+ * 			connection = psycopg2.connect("host=_host,username=_username,password=_password,database=_database")             # <<<<<<<<<<<<<<
+ * 			return connection
+ * 		except MySQLdb.Error, e:
+ */
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_host__host_username__username_pa); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple_);
+  __Pyx_GIVEREF(__pyx_tuple_);
   __Pyx_RefNannyFinishContext();
   return 0;
+  __pyx_L1_error:;
+  __Pyx_RefNannyFinishContext();
+  return -1;
 }
 
 static int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  __pyx_int_44444 = PyInt_FromLong(44444L); if (unlikely(!__pyx_int_44444)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_4444444333333333322222222222 = PyInt_FromString((char *)"4444444333333333322222222222", 0, 0); if (unlikely(!__pyx_int_4444444333333333322222222222)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_444444444444444444444444444444444444444444444444433 = PyInt_FromString((char *)"444444444444444444444444444444444444444444444444433", 0, 0); if (unlikely(!__pyx_int_444444444444444444444444444444444444444444444444433)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -1314,6 +3048,7 @@ PyMODINIT_FUNC PyInit_db_connects(void)
 #endif
 {
   PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannyDeclarations
   #if CYTHON_REFNANNY
   __Pyx_RefNanny = __Pyx_RefNannyImportAPI("refnanny");
@@ -1389,9 +3124,9 @@ PyMODINIT_FUNC PyInit_db_connects(void)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_11db_connects_DbConnection) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_11db_connects_DbConnection) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
   __pyx_type_11db_connects_DbConnection.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "DbConnection", (PyObject *)&__pyx_type_11db_connects_DbConnection) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  if (PyObject_SetAttrString(__pyx_m, "DbConnection", (PyObject *)&__pyx_type_11db_connects_DbConnection) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
   __pyx_ptype_11db_connects_DbConnection = &__pyx_type_11db_connects_DbConnection;
   /*--- Type import code ---*/
   /*--- Variable import code ---*/
@@ -1415,7 +3150,7 @@ PyMODINIT_FUNC PyInit_db_connects(void)
  * import sys
  * import redis             # <<<<<<<<<<<<<<
  * import db_constants
- * 
+ * from pymongo import *
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_redis, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -1426,29 +3161,72 @@ PyMODINIT_FUNC PyInit_db_connects(void)
  * import sys
  * import redis
  * import db_constants             # <<<<<<<<<<<<<<
- * 
- * 
+ * from pymongo import *
+ * import psycopg2
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_db_constants, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_db_constants, __pyx_t_1) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
+  /* "db_connection.pyx":4
+ * import redis
+ * import db_constants
+ * from pymongo import *             # <<<<<<<<<<<<<<
+ * import psycopg2
+ * import MySQLdb
+ */
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(__pyx_n_s__2);
+  __Pyx_GIVEREF(__pyx_n_s__2);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s__2);
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_pymongo, __pyx_t_1, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (__pyx_import_star(__pyx_t_2) < 0) __PYX_ERR(0, 4, __pyx_L1_error);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "db_connection.pyx":5
+ * import db_constants
+ * from pymongo import *
+ * import psycopg2             # <<<<<<<<<<<<<<
+ * import MySQLdb
+ * 
+ */
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_psycopg2, 0, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_psycopg2, __pyx_t_2) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "db_connection.pyx":6
+ * from pymongo import *
+ * import psycopg2
+ * import MySQLdb             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_MySQLdb, 0, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MySQLdb, __pyx_t_2) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
   /* "db_connection.pyx":1
  * import sys             # <<<<<<<<<<<<<<
  * import redis
  * import db_constants
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /*--- Wrapped vars code ---*/
 
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
   if (__pyx_m) {
     if (__pyx_d) {
       __Pyx_AddTraceback("init db_connects", __pyx_clineno, __pyx_lineno, __pyx_filename);
@@ -1483,6 +3261,86 @@ end:
     return (__Pyx_RefNannyAPIStruct *)r;
 }
 #endif
+
+/* GetBuiltinName */
+static PyObject *__Pyx_GetBuiltinName(PyObject *name) {
+    PyObject* result = __Pyx_PyObject_GetAttrStr(__pyx_b, name);
+    if (unlikely(!result)) {
+        PyErr_Format(PyExc_NameError,
+#if PY_MAJOR_VERSION >= 3
+            "name '%U' is not defined", name);
+#else
+            "name '%.200s' is not defined", PyString_AS_STRING(name));
+#endif
+    }
+    return result;
+}
+
+/* RaiseArgTupleInvalid */
+static void __Pyx_RaiseArgtupleInvalid(
+    const char* func_name,
+    int exact,
+    Py_ssize_t num_min,
+    Py_ssize_t num_max,
+    Py_ssize_t num_found)
+{
+    Py_ssize_t num_expected;
+    const char *more_or_less;
+    if (num_found < num_min) {
+        num_expected = num_min;
+        more_or_less = "at least";
+    } else {
+        num_expected = num_max;
+        more_or_less = "at most";
+    }
+    if (exact) {
+        more_or_less = "exactly";
+    }
+    PyErr_Format(PyExc_TypeError,
+                 "%.200s() takes %.8s %" CYTHON_FORMAT_SSIZE_T "d positional argument%.1s (%" CYTHON_FORMAT_SSIZE_T "d given)",
+                 func_name, more_or_less, num_expected,
+                 (num_expected == 1) ? "" : "s", num_found);
+}
+
+/* KeywordStringCheck */
+static CYTHON_INLINE int __Pyx_CheckKeywordStrings(
+    PyObject *kwdict,
+    const char* function_name,
+    int kw_allowed)
+{
+    PyObject* key = 0;
+    Py_ssize_t pos = 0;
+#if CYTHON_COMPILING_IN_PYPY
+    if (!kw_allowed && PyDict_Next(kwdict, &pos, &key, 0))
+        goto invalid_keyword;
+    return 1;
+#else
+    while (PyDict_Next(kwdict, &pos, &key, 0)) {
+        #if PY_MAJOR_VERSION < 3
+        if (unlikely(!PyString_CheckExact(key)) && unlikely(!PyString_Check(key)))
+        #endif
+            if (unlikely(!PyUnicode_Check(key)))
+                goto invalid_keyword_type;
+    }
+    if ((!kw_allowed) && unlikely(key))
+        goto invalid_keyword;
+    return 1;
+invalid_keyword_type:
+    PyErr_Format(PyExc_TypeError,
+        "%.200s() keywords must be strings", function_name);
+    return 0;
+#endif
+invalid_keyword:
+    PyErr_Format(PyExc_TypeError,
+    #if PY_MAJOR_VERSION < 3
+        "%.200s() got an unexpected keyword argument '%.200s'",
+        function_name, PyString_AsString(key));
+    #else
+        "%s() got an unexpected keyword argument '%U'",
+        function_name, key);
+    #endif
+    return 0;
+}
 
 /* RaiseDoubleKeywords */
 static void __Pyx_RaiseDoubleKeywordsError(
@@ -1600,46 +3458,6 @@ bad:
     return -1;
 }
 
-/* RaiseArgTupleInvalid */
-static void __Pyx_RaiseArgtupleInvalid(
-    const char* func_name,
-    int exact,
-    Py_ssize_t num_min,
-    Py_ssize_t num_max,
-    Py_ssize_t num_found)
-{
-    Py_ssize_t num_expected;
-    const char *more_or_less;
-    if (num_found < num_min) {
-        num_expected = num_min;
-        more_or_less = "at least";
-    } else {
-        num_expected = num_max;
-        more_or_less = "at most";
-    }
-    if (exact) {
-        more_or_less = "exactly";
-    }
-    PyErr_Format(PyExc_TypeError,
-                 "%.200s() takes %.8s %" CYTHON_FORMAT_SSIZE_T "d positional argument%.1s (%" CYTHON_FORMAT_SSIZE_T "d given)",
-                 func_name, more_or_less, num_expected,
-                 (num_expected == 1) ? "" : "s", num_found);
-}
-
-/* GetBuiltinName */
-static PyObject *__Pyx_GetBuiltinName(PyObject *name) {
-    PyObject* result = __Pyx_PyObject_GetAttrStr(__pyx_b, name);
-    if (unlikely(!result)) {
-        PyErr_Format(PyExc_NameError,
-#if PY_MAJOR_VERSION >= 3
-            "name '%U' is not defined", name);
-#else
-            "name '%.200s' is not defined", PyString_AS_STRING(name));
-#endif
-    }
-    return result;
-}
-
 /* GetModuleGlobalName */
 static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
     PyObject *result;
@@ -1678,8 +3496,79 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
 }
 #endif
 
-/* SaveResetException */
+/* PyObjectCallMethO */
   #if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject *arg) {
+    PyObject *self, *result;
+    PyCFunction cfunc;
+    cfunc = PyCFunction_GET_FUNCTION(func);
+    self = PyCFunction_GET_SELF(func);
+    if (unlikely(Py_EnterRecursiveCall((char*)" while calling a Python object")))
+        return NULL;
+    result = cfunc(self, arg);
+    Py_LeaveRecursiveCall();
+    if (unlikely(!result) && unlikely(!PyErr_Occurred())) {
+        PyErr_SetString(
+            PyExc_SystemError,
+            "NULL result without error in PyObject_Call");
+    }
+    return result;
+}
+#endif
+
+/* PyObjectCallOneArg */
+  #if CYTHON_COMPILING_IN_CPYTHON
+static PyObject* __Pyx__PyObject_CallOneArg(PyObject *func, PyObject *arg) {
+    PyObject *result;
+    PyObject *args = PyTuple_New(1);
+    if (unlikely(!args)) return NULL;
+    Py_INCREF(arg);
+    PyTuple_SET_ITEM(args, 0, arg);
+    result = __Pyx_PyObject_Call(func, args, NULL);
+    Py_DECREF(args);
+    return result;
+}
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg) {
+#ifdef __Pyx_CyFunction_USED
+    if (likely(PyCFunction_Check(func) || PyObject_TypeCheck(func, __pyx_CyFunctionType))) {
+#else
+    if (likely(PyCFunction_Check(func))) {
+#endif
+        if (likely(PyCFunction_GET_FLAGS(func) & METH_O)) {
+            return __Pyx_PyObject_CallMethO(func, arg);
+        }
+    }
+    return __Pyx__PyObject_CallOneArg(func, arg);
+}
+#else
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg) {
+    PyObject *result;
+    PyObject *args = PyTuple_Pack(1, arg);
+    if (unlikely(!args)) return NULL;
+    result = __Pyx_PyObject_Call(func, args, NULL);
+    Py_DECREF(args);
+    return result;
+}
+#endif
+
+/* PyObjectCallNoArg */
+    #if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func) {
+#ifdef __Pyx_CyFunction_USED
+    if (likely(PyCFunction_Check(func) || PyObject_TypeCheck(func, __pyx_CyFunctionType))) {
+#else
+    if (likely(PyCFunction_Check(func))) {
+#endif
+        if (likely(PyCFunction_GET_FLAGS(func) & METH_NOARGS)) {
+            return __Pyx_PyObject_CallMethO(func, NULL);
+        }
+    }
+    return __Pyx_PyObject_Call(func, __pyx_empty_tuple, NULL);
+}
+#endif
+
+/* SaveResetException */
+      #if CYTHON_COMPILING_IN_CPYTHON
 static CYTHON_INLINE void __Pyx__ExceptionSave(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
     *type = tstate->exc_type;
     *value = tstate->exc_value;
@@ -1703,7 +3592,7 @@ static CYTHON_INLINE void __Pyx__ExceptionReset(PyThreadState *tstate, PyObject 
 #endif
 
 /* GetException */
-  #if CYTHON_COMPILING_IN_CPYTHON
+      #if CYTHON_COMPILING_IN_CPYTHON
 static int __Pyx__GetException(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
 #else
 static int __Pyx_GetException(PyObject **type, PyObject **value, PyObject **tb) {
@@ -1763,8 +3652,99 @@ bad:
     return -1;
 }
 
+/* PyErrExceptionMatches */
+        #if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE int __Pyx_PyErr_ExceptionMatchesInState(PyThreadState* tstate, PyObject* err) {
+    PyObject *exc_type = tstate->curexc_type;
+    if (exc_type == err) return 1;
+    if (unlikely(!exc_type)) return 0;
+    return PyErr_GivenExceptionMatches(exc_type, err);
+}
+#endif
+
+/* GetItemInt */
+        static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j) {
+    PyObject *r;
+    if (!j) return NULL;
+    r = PyObject_GetItem(o, j);
+    Py_DECREF(j);
+    return r;
+}
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_List_Fast(PyObject *o, Py_ssize_t i,
+                                                              CYTHON_NCP_UNUSED int wraparound,
+                                                              CYTHON_NCP_UNUSED int boundscheck) {
+#if CYTHON_COMPILING_IN_CPYTHON
+    if (wraparound & unlikely(i < 0)) i += PyList_GET_SIZE(o);
+    if ((!boundscheck) || likely((0 <= i) & (i < PyList_GET_SIZE(o)))) {
+        PyObject *r = PyList_GET_ITEM(o, i);
+        Py_INCREF(r);
+        return r;
+    }
+    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
+#else
+    return PySequence_GetItem(o, i);
+#endif
+}
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize_t i,
+                                                              CYTHON_NCP_UNUSED int wraparound,
+                                                              CYTHON_NCP_UNUSED int boundscheck) {
+#if CYTHON_COMPILING_IN_CPYTHON
+    if (wraparound & unlikely(i < 0)) i += PyTuple_GET_SIZE(o);
+    if ((!boundscheck) || likely((0 <= i) & (i < PyTuple_GET_SIZE(o)))) {
+        PyObject *r = PyTuple_GET_ITEM(o, i);
+        Py_INCREF(r);
+        return r;
+    }
+    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
+#else
+    return PySequence_GetItem(o, i);
+#endif
+}
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i, int is_list,
+                                                     CYTHON_NCP_UNUSED int wraparound,
+                                                     CYTHON_NCP_UNUSED int boundscheck) {
+#if CYTHON_COMPILING_IN_CPYTHON
+    if (is_list || PyList_CheckExact(o)) {
+        Py_ssize_t n = ((!wraparound) | likely(i >= 0)) ? i : i + PyList_GET_SIZE(o);
+        if ((!boundscheck) || (likely((n >= 0) & (n < PyList_GET_SIZE(o))))) {
+            PyObject *r = PyList_GET_ITEM(o, n);
+            Py_INCREF(r);
+            return r;
+        }
+    }
+    else if (PyTuple_CheckExact(o)) {
+        Py_ssize_t n = ((!wraparound) | likely(i >= 0)) ? i : i + PyTuple_GET_SIZE(o);
+        if ((!boundscheck) || likely((n >= 0) & (n < PyTuple_GET_SIZE(o)))) {
+            PyObject *r = PyTuple_GET_ITEM(o, n);
+            Py_INCREF(r);
+            return r;
+        }
+    } else {
+        PySequenceMethods *m = Py_TYPE(o)->tp_as_sequence;
+        if (likely(m && m->sq_item)) {
+            if (wraparound && unlikely(i < 0) && likely(m->sq_length)) {
+                Py_ssize_t l = m->sq_length(o);
+                if (likely(l >= 0)) {
+                    i += l;
+                } else {
+                    if (!PyErr_ExceptionMatches(PyExc_OverflowError))
+                        return NULL;
+                    PyErr_Clear();
+                }
+            }
+            return m->sq_item(o, i);
+        }
+    }
+#else
+    if (is_list || PySequence_Check(o)) {
+        return PySequence_GetItem(o, i);
+    }
+#endif
+    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
+}
+
 /* Import */
-    static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, int level) {
+        static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, int level) {
     PyObject *empty_list = 0;
     PyObject *module = 0;
     PyObject *global_dict = 0;
@@ -1838,7 +3818,7 @@ bad:
 }
 
 /* CodeObjectCache */
-    static int __pyx_bisect_code_objects(__Pyx_CodeObjectCacheEntry* entries, int count, int code_line) {
+        static int __pyx_bisect_code_objects(__Pyx_CodeObjectCacheEntry* entries, int count, int code_line) {
     int start = 0, mid = 0, end = count - 1;
     if (end >= 0 && code_line > entries[end].code_line) {
         return count;
@@ -1918,7 +3898,7 @@ static void __pyx_insert_code_object(int code_line, PyCodeObject* code_object) {
 }
 
 /* AddTraceback */
-    #include "compile.h"
+        #include "compile.h"
 #include "frameobject.h"
 #include "traceback.h"
 static PyCodeObject* __Pyx_CreateCodeObjectForTraceback(
@@ -1998,35 +3978,8 @@ bad:
     Py_XDECREF(py_frame);
 }
 
-/* CIntToPy */
-    static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
-    const long neg_one = (long) -1, const_zero = (long) 0;
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(long) < sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(long) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-        }
-    } else {
-        if (sizeof(long) <= sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-        }
-    }
-    {
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(long),
-                                     little, !is_unsigned);
-    }
-}
-
 /* Print */
-    #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION < 3
+        #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION < 3
 static PyObject *__Pyx_GetStdout(void) {
     PyObject *f = PySys_GetObject((char *)"stdout");
     if (!f) {
@@ -2131,8 +4084,35 @@ bad:
 }
 #endif
 
+/* CIntToPy */
+        static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
+    const long neg_one = (long) -1, const_zero = (long) 0;
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(long) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(long) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+        }
+    } else {
+        if (sizeof(long) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(long),
+                                     little, !is_unsigned);
+    }
+}
+
 /* PrintOne */
-    #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION < 3
+        #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION < 3
 static int __Pyx_PrintOne(PyObject* f, PyObject *o) {
     if (!f) {
         if (!(f = __Pyx_GetStdout()))
@@ -2169,7 +4149,7 @@ static int __Pyx_PrintOne(PyObject* stream, PyObject *o) {
 #endif
 
 /* CIntFromPyVerify */
-    #define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
+        #define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
     __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
 #define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
     __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
@@ -2191,7 +4171,7 @@ static int __Pyx_PrintOne(PyObject* stream, PyObject *o) {
     }
 
 /* CIntFromPy */
-    static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *x) {
+        static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *x) {
     const long neg_one = (long) -1, const_zero = (long) 0;
     const int is_unsigned = neg_one > const_zero;
 #if PY_MAJOR_VERSION < 3
@@ -2376,7 +4356,7 @@ raise_neg_overflow:
 }
 
 /* CIntFromPy */
-    static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *x) {
+        static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *x) {
     const int neg_one = (int) -1, const_zero = (int) 0;
     const int is_unsigned = neg_one > const_zero;
 #if PY_MAJOR_VERSION < 3
@@ -2560,8 +4540,14 @@ raise_neg_overflow:
     return (int) -1;
 }
 
+/* CStringEquals */
+        static CYTHON_INLINE int __Pyx_StrEq(const char *s1, const char *s2) {
+    while (*s1 != '\0' && *s1 == *s2) { s1++; s2++; }
+    return *s1 == *s2;
+}
+
 /* CheckBinaryVersion */
-    static int __Pyx_check_binary_version(void) {
+        static int __Pyx_check_binary_version(void) {
     char ctversion[4], rtversion[4];
     PyOS_snprintf(ctversion, 4, "%d.%d", PY_MAJOR_VERSION, PY_MINOR_VERSION);
     PyOS_snprintf(rtversion, 4, "%s", Py_GetVersion());
@@ -2577,7 +4563,7 @@ raise_neg_overflow:
 }
 
 /* InitStrings */
-    static int __Pyx_InitStrings(__Pyx_StringTabEntry *t) {
+        static int __Pyx_InitStrings(__Pyx_StringTabEntry *t) {
     while (t->p) {
         #if PY_MAJOR_VERSION < 3
         if (t->is_unicode) {
