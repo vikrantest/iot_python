@@ -1,5 +1,5 @@
 import redis
-import db_connects
+import db_connections
 import json
 print 1111111111111111
 import time
@@ -10,7 +10,7 @@ from db_constants import *
 
 stocons = StorageConstants()
 
-# r = db_connects.DbConnection().redis_db_connect()
+# r = db_connections.DbConnection().redis_db_connect()
 # # r = redis.Redis(host= '104.155.181.214',port=6379,password='vh6HSwa9')
 # print r
 # data = {str(int(time.time())):datetime.datetime.now()}
@@ -23,7 +23,7 @@ stocons = StorageConstants()
 # # else:
 # # 	r.set('phone_time',data)
 # print r.get('phone_time').split(',')
-# print inspect.getmembers(db_connects.DbConnection(), predicate=inspect.ismethod)
+# print inspect.getmembers(db_connections.DbConnection(), predicate=inspect.ismethod)
 # # redis_connection.close()
 
 
@@ -34,9 +34,9 @@ class StorageConnection(object):
 	def __init__(self,storage):
 		self.instances = self.instances+1
 		if 'redis' in storage:
-			self.conn = db_connects.DbConnection().redis_db_connect()
+			self.conn = db_connections.DbConnection().redis_db_connect()
 		else:
-			self.conn = db_connects.DbConnection().redis_db_connect()
+			self.conn = db_connections.DbConnection().redis_db_connect()
 
 	def dbops(self,key,value,operations):
 		con = self.conn

@@ -1,2 +1,0 @@
-/usr/bin/python db_set.py build_ext --inplace
-mv db_ops.so ../mobile_gateway_apis/

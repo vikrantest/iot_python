@@ -1,0 +1,3 @@
+/usr/bin/python db_set.py build_ext --inplace
+mv db_ops.so ../gateway_apis/
+mv db_connections.so ../gateway_apis/

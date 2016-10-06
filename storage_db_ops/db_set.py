@@ -4,7 +4,7 @@ from Cython.Distutils import build_ext
 
 ext_modules=[
     Extension("db_ops",["db_operations.py"],),
-    Extension('db_connects',['db_connection.pyx']) ]
+    Extension('db_connections',['db_connection.pyx']) ]
 
 setup(name='db ops package',
       packages=find_packages(),

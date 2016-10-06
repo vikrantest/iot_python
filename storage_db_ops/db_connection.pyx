@@ -12,11 +12,11 @@ cdef class DbConnection(object):
 
 
 	def __init__(self):
-		print 44444
+		self.stocons = StorageConstants()
 
 
 	def redis_db_connect(self,host=None,username=None,password=None,database=None):
-		stocons = StorageConstants()
+		stocons = self.stocons
 		_host = host or stocons.REDIS_DATABASE_HOST
 		_password = password or stocons.REDIS_DATABASE_PASSWORD
 		_database = database or 0

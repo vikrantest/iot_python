@@ -22,5 +22,5 @@ test_speed()
 print 11111111111111111111111111111111111111111111111111111111
 
 
-# gcc $CFLAGS -I/usr/include/python2.7    -o test_server test_server.c -lpython2.7 -lpthread -lm -lutil -ldl
-# cython test_server.py -o ../test_server.c --embed
+# gcc $CFLAGS -I/usr/include/python2.7    -o socket_listner socket_listner.c -lpython2.7 -lpthread -lm -lutil -ldl
+# cython socket_listner.py -o ../socket_listner.c --embed
